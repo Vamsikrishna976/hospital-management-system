@@ -1,0 +1,10 @@
+node_modules/
+.env
+dist/
+build/
+coverage/
+
+hms-backend/node_modules/
+hms-frontend/node_modules/
+
+.vscode/
