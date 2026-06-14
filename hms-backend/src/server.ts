@@ -11,6 +11,8 @@ import doctorDashboardRoutes from "./routes/doctorDashboard.routes.ts";
 import prescriptionRoutes from "./routes/prescription.routes.ts";
 import pdfRoutes from "./routes/pdf.routes.ts";
 import consultationRoutes from "./routes/consultation.routes.ts";
+import medicineRoutes from "./routes/medicine.routes.ts";
+import historyRoutes from "./routes/history.routes.ts";
 
 dotenv.config();
 
@@ -28,6 +30,8 @@ app.use("/api/doctor-dashboard", doctorDashboardRoutes);
 app.use("/api/prescriptions", prescriptionRoutes);
 app.use("/api/prescriptions", pdfRoutes);
 app.use("/api/consultations", consultationRoutes);
+app.use("/api/medicines", medicineRoutes);
+app.use("/api/history", historyRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hospital Management System API Running");
