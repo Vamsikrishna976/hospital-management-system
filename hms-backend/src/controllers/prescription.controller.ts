@@ -37,3 +37,40 @@ export const createPrescription = async (
     return res.status(500).json(error);
   }
 };
+
+export const getPrescription = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const prescription =
+      await prisma.prescription.findUnique({
+        where: {
+          id: String(req.params.id),
+        },
+        include: {
+          medicines: true,
+
+          appointment: {
+            include: {
+              doctor: true,
+
+              opRecord: {
+                include: {
+                  patient: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+    return res.json(prescription);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Failed to fetch prescription",
+    });
+  }
+};

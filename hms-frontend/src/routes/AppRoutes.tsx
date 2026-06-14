@@ -8,6 +8,9 @@ import Complaint from "../pages/op/Complaint";
 import AssignDoctor from "../pages/management/AssignDoctor";
 import DoctorDashboard from "../pages/doctor/DoctorDashboard";
 import Consultation from "../pages/doctor/Consultation";
+import MedicineEntry from "../pages/doctor/MedicineEntry";
+import PrescriptionView from "../pages/doctor/PrescriptionView";
+import PatientHistory from "../pages/history/PatientHistory";
 
 export default function AppRoutes() {
   return (
@@ -28,6 +31,12 @@ export default function AppRoutes() {
         <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
 
         <Route path="/doctor/consultation" element={<Consultation />} />
+
+        <Route path="/doctor/medicine" element={<MedicineEntry />} />
+
+        <Route path="/doctor/prescription" element={<PrescriptionView />} />
+
+        <Route path="/history" element={<PatientHistory />} />
       </Routes>
     </BrowserRouter>
   );

@@ -33,7 +33,7 @@ export default function PatientSearch() {
         value={mobile}
         onChange={(e) => setMobile(e.target.value)}
         placeholder="Enter Mobile Number"
-        className="border p-3 rounded w-full"
+        className="border p-3 rounded-lg w-80"
       />
 
       <button
@@ -47,25 +47,28 @@ export default function PatientSearch() {
         <div className="mt-6 border rounded p-4 bg-white shadow">
           <h2 className="text-xl font-bold mb-3">Patient Details</h2>
 
-          <p>
-            <strong>Patient ID:</strong> {patient.patientNumber}
-          </p>
+          <div className="bg-white shadow rounded-lg p-6 mb-6">
+            <h2 className="text-2xl font-bold">{patient.fullName}</h2>
 
-          <p>
-            <strong>Name:</strong> {patient.fullName}
-          </p>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <p>
+                <strong>Mobile:</strong> {patient.mobile}
+              </p>
 
-          <p>
-            <strong>Mobile:</strong> {patient.mobile}
-          </p>
+              <p>
+                <strong>Age:</strong> {patient.age}
+              </p>
 
-          <p>
-            <strong>Age:</strong> {patient.age}
-          </p>
+              <p>
+                <strong>Gender:</strong> {patient.gender}
+              </p>
 
-          <p>
-            <strong>Gender:</strong> {patient.gender}
-          </p>
+              <p>
+                <strong>Patient No:</strong> {patient.patientNumber}
+              </p>
+            </div>
+          </div>
+
           <button
             onClick={() =>
               navigate("/op/new", {
