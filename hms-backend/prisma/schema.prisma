@@ -75,6 +75,8 @@ model OPRecord {
 
   appointment Appointment[]
 
+  billing Billing?
+
   createdAt DateTime @default(now())
 }
 
@@ -160,36 +162,60 @@ model Appointment {
 }
 
 model Prescription {
-  id             String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  appointmentId  String   @unique
+  appointmentId String @unique
 
-  diagnosis      String
+  diagnosis String
 
-  notes          String?
+  notes String?
 
-  followUpDate   DateTime?
+  followUpDate DateTime?
 
-  createdAt      DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  appointment    Appointment @relation(fields: [appointmentId],references: [id])
+  appointment Appointment @relation(fields: [appointmentId], references: [id])
 
-  medicines      Medicine[]
+  medicines Medicine[]
 }
 
 model Medicine {
-  id              String @id @default(uuid())
+  id String @id @default(uuid())
 
-  prescriptionId  String
+  prescriptionId String
 
-  medicineName    String
+  medicineName String
 
-  dosage          String
+  dosage String
 
-  frequency       String
+  frequency String
 
-  duration        String
+  duration String
 
-  prescription    Prescription @relation(fields:[prescriptionId], references:[id])
+  prescription Prescription @relation(fields: [prescriptionId], references: [id])
 }
 
+enum PaymentStatus {
+  PENDING
+  PAID
+}
+
+model Billing {
+  id String @id @default(uuid())
+
+  billNumber String? @unique
+
+  opRecordId String @unique
+
+  consultationFee Float
+  medicineFee     Float
+  labFee          Float
+  otherFee        Float
+  totalAmount     Float
+
+  paymentStatus String @default("PENDING")
+
+  createdAt DateTime @default(now())
+
+  opRecord OPRecord @relation(fields: [opRecordId], references: [id])
+}

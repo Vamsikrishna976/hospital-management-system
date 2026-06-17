@@ -11,6 +11,8 @@ import Consultation from "../pages/doctor/Consultation";
 import MedicineEntry from "../pages/doctor/MedicineEntry";
 import PrescriptionView from "../pages/doctor/PrescriptionView";
 import PatientHistory from "../pages/history/PatientHistory";
+import Billing from "../pages/reception/Billing";
+import BillingHistory from "../pages/reception/BillingHistory";
 
 export default function AppRoutes() {
   return (
@@ -37,6 +39,10 @@ export default function AppRoutes() {
         <Route path="/doctor/prescription" element={<PrescriptionView />} />
 
         <Route path="/history" element={<PatientHistory />} />
+
+        <Route path="/billing" element={<Billing />} />
+
+        <Route path="/billing-history" element={<BillingHistory />} />
       </Routes>
     </BrowserRouter>
   );
