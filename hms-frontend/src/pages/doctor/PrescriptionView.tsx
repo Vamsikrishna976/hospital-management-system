@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function PrescriptionView() {
@@ -8,6 +8,8 @@ export default function PrescriptionView() {
   const prescriptionId = location.state?.prescriptionId;
 
   const [prescription, setPrescription] = useState<any>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPrescription();
@@ -187,12 +189,25 @@ export default function PrescriptionView() {
       </div>
 
       {/* Print Button */}
-      <div className="mt-8 print:hidden">
+      <div className="mt-8 flex gap-6 print:hidden ">
         <button
           onClick={() => window.print()}
-          className="print-hidden bg-green-600 text-white px-6 py-3 rounded"
+          className="bg-green-600  hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium shadow"
         >
-          Print Prescription
+          🖨️ Print Prescription
+        </button>
+
+        <button
+          onClick={() =>
+            navigate("/billing", {
+              state: {
+                opRecordId: prescription.appointment.opRecord.id,
+              },
+            })
+          }
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 p-6 py-3 rounded-lg font-medium shadow"
+        >
+          💳 Proceed to Billing
         </button>
       </div>
     </div>

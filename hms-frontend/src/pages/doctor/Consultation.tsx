@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-
 export default function Consultation() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ export default function Consultation() {
 
   const handleSubmit = async () => {
     try {
-      const result = await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/api/consultations",
         {
           appointmentId,
@@ -28,9 +27,14 @@ export default function Consultation() {
           followUpDate,
         },
       );
+
+      const prescriptionId = response.data.prescription.id;
+
       navigate("/doctor/medicine", {
         state: {
-          prescriptionId: result.data.data.id,
+          prescriptionId,
+          appointmentId,
+          opRecordId,
         },
       });
     } catch (error) {

@@ -4,10 +4,11 @@ import axios from "axios";
 
 export default function MedicineEntry() {
   const location = useLocation();
+  console.log(location.state);
   const navigate = useNavigate();
 
   const prescriptionId = location.state?.prescriptionId;
-
+  
   const [medicines, setMedicines] = useState([
     {
       medicineName: "",

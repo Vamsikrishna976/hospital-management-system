@@ -13,6 +13,7 @@ import pdfRoutes from "./routes/pdf.routes.ts";
 import consultationRoutes from "./routes/consultation.routes.ts";
 import medicineRoutes from "./routes/medicine.routes.ts";
 import historyRoutes from "./routes/history.routes.ts";
+import billingRoutes from "./routes/billing.routes.ts";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use("/api/prescriptions", pdfRoutes);
 app.use("/api/consultations", consultationRoutes);
 app.use("/api/medicines", medicineRoutes);
 app.use("/api/history", historyRoutes);
+app.use("/api/billing", billingRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hospital Management System API Running");

@@ -4,12 +4,13 @@ import prisma from "../utils/prisma.ts";
 export const searchPatient = async (req: Request, res: Response) => {
   try {
     const mobile = req.query.mobile as string;
-
+    console.log("Searching Mobile:", mobile);
     const patient = await prisma.patient.findUnique({
       where: {
         mobile,
       },
     });
+    console.log("Patient Found:", patient);
 
     if (!patient) {
       return res.json({
