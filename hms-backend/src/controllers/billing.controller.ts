@@ -151,15 +151,18 @@ export const payBill = async (req: Request, res: Response) => {
   try {
     const billingId = req.params.id as string;
 
+    console.log("PAY REQUEST RECEIVED:", billingId);
+
     const billing = await prisma.billing.update({
       where: {
         id: billingId,
       },
-
       data: {
         paymentStatus: "PAID",
       },
     });
+
+    console.log("UPDATED BILL:", billing);
 
     return res.json({
       message: "Payment Successful",
@@ -173,7 +176,6 @@ export const payBill = async (req: Request, res: Response) => {
     });
   }
 };
-
 export const getBillingHistory = async (req: Request, res: Response) => {
   try {
     const bills = await prisma.billing.findMany({

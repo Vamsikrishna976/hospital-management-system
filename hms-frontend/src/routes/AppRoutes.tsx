@@ -13,6 +13,12 @@ import PrescriptionView from "../pages/doctor/PrescriptionView";
 import PatientHistory from "../pages/history/PatientHistory";
 import Billing from "../pages/reception/Billing";
 import BillingHistory from "../pages/reception/BillingHistory";
+import PatientRegister from "../pages/patients/PatientRegister";
+import AppointmentManagement from "../pages/management/AppointmentManagement";
+import Reports from "../pages/reports/Reports";
+import ProtectedRoute from "./ProctectedRoute";
+import UserManagement from "../pages/admin/UserManagement";
+import AuditLogs from "../pages/admin/AuditLogs";
 
 export default function AppRoutes() {
   return (
@@ -26,23 +32,90 @@ export default function AppRoutes() {
 
         <Route path="/op/new" element={<NewOP />} />
 
+        <Route path="/patients/register" element={<PatientRegister />} />
+
         <Route path="/op/complaint" element={<Complaint />} />
 
         <Route path="/management/assign" element={<AssignDoctor />} />
 
-        <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
-
-        <Route path="/doctor/consultation" element={<Consultation />} />
-
-        <Route path="/doctor/medicine" element={<MedicineEntry />} />
-
-        <Route path="/doctor/prescription" element={<PrescriptionView />} />
-
         <Route path="/history" element={<PatientHistory />} />
 
-        <Route path="/billing" element={<Billing />} />
+        <Route
+          path="/doctor/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["DOCTOR"]}>
+              <DoctorDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctor/consultation"
+          element={
+            <ProtectedRoute allowedRoles={["DOCTOR"]}>
+              <Consultation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctor/medicine"
+          element={
+            <ProtectedRoute allowedRoles={["DOCTOR"]}>
+              <MedicineEntry />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctor/prescription"
+          element={
+            <ProtectedRoute allowedRoles={["DOCTOR"]}>
+              <PrescriptionView />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/billing-history" element={<BillingHistory />} />
+        <Route
+          path="/billing"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "RECEPTIONIST"]}>
+              <Billing />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/billing-history"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "RECEPTIONIST"]}>
+              <BillingHistory />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/appointments"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "MANAGEMENT"]}>
+              <AppointmentManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "MANAGEMENT"]}>
+              <Reports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <UserManagement />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/audit-logs" element={<AuditLogs />} />
+        
       </Routes>
     </BrowserRouter>
   );

@@ -17,6 +17,7 @@ export default function MedicineEntry() {
       duration: "",
     },
   ]);
+  console.log("Medicine State:", location.state);
 
   const handleChange = (index: number, field: string, value: string) => {
     const updated = [...medicines];

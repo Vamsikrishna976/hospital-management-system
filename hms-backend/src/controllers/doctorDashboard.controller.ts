@@ -6,7 +6,7 @@ export const getAssignedPatients = async (
   res: Response
 ) => {
   try {
-    const doctorId = req.params.doctorId;
+    const doctorId = req.params.doctorId as string;
 
     const appointments =
       await prisma.appointment.findMany({

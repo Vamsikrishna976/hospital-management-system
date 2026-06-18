@@ -64,23 +64,12 @@ export default function BillingHistory() {
     );
   };
 
-  const exportToExcel = () => {
-    const excelData = filteredBills.map((bill) => ({
-      "Bill Number": bill.billNumber,
-      Patient: bill.opRecord.patient.fullName,
-      Mobile: bill.opRecord.patient.mobile,
-      "OP Number": bill.opRecord.opNumber,
-      Amount: bill.totalAmount,
-      Status: bill.paymentStatus,
-      Date: new Date(bill.createdAt).toLocaleDateString(),
-    }));
+  const printBill = (bill: Bill) => {
+    const printWindow = window.open("", "_blank", "width=800,height=700");
 
-    const printBill = (bill: Bill) => {
-      const printWindow = window.open("", "_blank", "width=800,height=700");
+    if (!printWindow) return;
 
-      if (!printWindow) return;
-
-      printWindow.document.write(`
+    printWindow.document.write(`
     <html>
       <head>
         <title>${bill.billNumber}</title>
@@ -186,12 +175,22 @@ export default function BillingHistory() {
     </html>
   `);
 
-      printWindow.document.close();
-      printWindow.focus();
-      printWindow.print();
-    };
-    console.log(printBill);
-    
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+  };
+  console.log(printBill);
+
+  const exportToExcel = () => {
+    const excelData = filteredBills.map((bill) => ({
+      "Bill Number": bill.billNumber,
+      Patient: bill.opRecord.patient.fullName,
+      Mobile: bill.opRecord.patient.mobile,
+      "OP Number": bill.opRecord.opNumber,
+      Amount: bill.totalAmount,
+      Status: bill.paymentStatus,
+      Date: new Date(bill.createdAt).toLocaleDateString(),
+    }));
 
     const worksheet = XLSX.utils.json_to_sheet(excelData);
 
@@ -298,68 +297,62 @@ export default function BillingHistory() {
           </thead>
 
           <tbody>
-            {filteredBills.map((bill: any) => (
-              <tr key={bill.id} className="border-b hover:bg-gray-50">
-                <td className="p-3">{bill.billNumber}</td>
+            {filteredBills.length > 0 ? (
+              filteredBills.map((bill: any) => (
+                <tr key={bill.id} className="border-b hover:bg-gray-50">
+                  <td className="p-3">{bill.billNumber}</td>
 
-                <td className="p-3">{bill.opRecord.patient.fullName}</td>
+                  <td className="p-3">{bill.opRecord.patient.fullName}</td>
 
-                <td className="p-3">{bill.opRecord.patient.mobile}</td>
+                  <td className="p-3">{bill.opRecord.patient.mobile}</td>
 
-                <td className="p-3">{bill.opRecord.opNumber}</td>
+                  <td className="p-3">{bill.opRecord.opNumber}</td>
 
-                <td className="p-3 font-bold text-green-700">
-                  ₹{bill.totalAmount.toLocaleString()}
-                </td>
+                  <td className="p-3 font-bold text-green-700">
+                    ₹{bill.totalAmount}
+                  </td>
 
-                <td className="p-3">
-                  <span
-                    className={`px-3 py-1 rounded-full text-white text-sm ${
-                      bill.paymentStatus === "PAID"
-                        ? "bg-green-600"
-                        : "bg-orange-500"
-                    }`}
-                  >
-                    {bill.paymentStatus}
-                  </span>
-                </td>
+                  <td className="p-3">
+                    <span
+                      className={`px-3 py-1 rounded-full text-white text-sm ${
+                        bill.paymentStatus === "PAID"
+                          ? "bg-green-600"
+                          : "bg-orange-500"
+                      }`}
+                    >
+                      {bill.paymentStatus}
+                    </span>
+                  </td>
 
-                <td className="p-3">
-                  {new Date(bill.createdAt).toLocaleDateString()}
-                </td>
+                  <td className="p-3">
+                    {new Date(bill.createdAt).toLocaleDateString()}
+                  </td>
 
-                <td className="p-3">
-                  <div className="flex gap-2">
+                  <td className="p-3 flex gap-2">
                     <button
                       onClick={() => setSelectedBill(bill)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                      className="bg-blue-600 text-white px-3 py-1 rounded text-sm"
                     >
                       View
                     </button>
 
                     <button
-                      onClick={() => window.print()}
+                      onClick={() => printBill(bill)}
                       className="bg-green-600 text-white px-3 py-1 rounded text-sm"
                     >
                       Print
                     </button>
-
-                    <button className="bg-red-600 text-white px-3 py-1 rounded text-sm">
-                      PDF
-                    </button>
-                  </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="p-6 text-center text-gray-500">
+                  No bills found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
-
-          {filteredBills.length === 0 && (
-            <tr>
-              <td colSpan={8} className="p-6 text-center text-gray-500">
-                No bills found
-              </td>
-            </tr>
-          )}
         </table>
 
         {selectedBill && (
