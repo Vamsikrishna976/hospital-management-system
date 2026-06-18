@@ -12,6 +12,10 @@ export default function PrescriptionView() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!prescriptionId) {
+      navigate("/doctor/dashboard");
+      return;
+    }
     fetchPrescription();
   }, []);
 
@@ -20,6 +24,7 @@ export default function PrescriptionView() {
       const response = await axios.get(
         `http://localhost:5000/api/prescriptions/${prescriptionId}`,
       );
+      console.log("Prescription ID:", prescriptionId);
 
       setPrescription(response.data);
     } catch (error) {
@@ -27,9 +32,13 @@ export default function PrescriptionView() {
     }
   };
 
-  if (!prescription) {
-    return <div>Loading...</div>;
-  }
+  // if (!prescriptionId) {
+  //   return <div className="p-10">No Prescription Selected</div>;
+  // }
+
+  // if (!prescription) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white">

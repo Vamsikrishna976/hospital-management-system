@@ -40,7 +40,7 @@ export default function Billing() {
     }
   };
 
-   async () => {
+  const payBill = async () => {
     try {
       await axios.put(`http://localhost:5000/api/billing/pay/${bill.id}`);
 
@@ -48,10 +48,9 @@ export default function Billing() {
 
       alert("✅ Payment Successful");
     } catch (error) {
-      console.error(error);
+      console.error("Payment Failed");
     }
   };
-
 
   //   const downloadPDF = () => {
   //     if (!bill) return;
@@ -330,6 +329,18 @@ export default function Billing() {
           className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow"
         >
           📄 Download PDF
+        </button>
+
+        <button
+          onClick={payBill}
+          disabled={bill?.paymentStatus === "PAID"}
+          className={`px-6 py-3 rounded-lg shadow text-white ${
+            bill?.paymentStatus === "PAID"
+              ? "bg-gray-500 cursor-not-allowed"
+              : "bg-green-600 hover:bg-green-700"
+          }`}
+        >
+          💳 {bill?.paymentStatus === "PAID" ? "Already Paid" : "Mark as Paid"}
         </button>
 
         <button

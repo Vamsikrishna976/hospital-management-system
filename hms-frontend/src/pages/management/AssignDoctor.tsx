@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function AssignDoctor() {
@@ -57,9 +57,11 @@ export default function AssignDoctor() {
       ${selectedDoctor === doctor.id ? "border-blue-600 bg-blue-50" : ""}`}
           onClick={() => setSelectedDoctor(doctor.id)}
         >
-          <h2 className="font-bold">{doctor.name}</h2>
+          <h2 className="font-bold">{doctor.fullName}</h2>
 
-          <p>{doctor.department}</p>
+          <p>{doctor.specialization}</p>
+
+          <p className="text-sm text-gray-500">{doctor.doctorCode}</p>
         </div>
       ))}
 

@@ -14,6 +14,10 @@ import consultationRoutes from "./routes/consultation.routes.ts";
 import medicineRoutes from "./routes/medicine.routes.ts";
 import historyRoutes from "./routes/history.routes.ts";
 import billingRoutes from "./routes/billing.routes.ts";
+import dashboardRoutes from "./routes/dashboard.routes.ts";
+import reportRoutes from "./routes/report.routes.ts";
+import userRoutes from "./routes/user.routes.ts";
+import auditRoutes from "./routes/audit.routes.ts";
 
 dotenv.config();
 
@@ -22,6 +26,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/patients", patientRoutes);
 app.use("/api/op", opRoutes);
 app.use("/api/complaints", complaintRoutes);
@@ -34,6 +39,9 @@ app.use("/api/consultations", consultationRoutes);
 app.use("/api/medicines", medicineRoutes);
 app.use("/api/history", historyRoutes);
 app.use("/api/billing", billingRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/reports", reportRoutes);
+app.use("/api/audit", auditRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hospital Management System API Running");

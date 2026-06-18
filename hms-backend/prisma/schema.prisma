@@ -119,27 +119,24 @@ model Complaint {
 }
 
 model Doctor {
-  id String @id @default(uuid())
+  id              String  @id @default(uuid())
+  doctorCode      String  @unique
+  fullName        String
+  specialization  String
+  qualification   String?
+  mobile          String
+  email           String?
+  consultationFee Float   @default(500)
 
-  doctorNumber String @unique
-
-  name String
-
-  qualification String
-
-  department String
-
-  specialization String
-
-  experience Int
-
-  consultationFee Float
-
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   appointments Appointment[]
+}
 
-  availability Boolean @default(true)
-
-  createdAt DateTime @default(now())
+enum AppointmentStatus {
+  ASSIGNED
+  COMPLETED
+  CANCELLED
 }
 
 model Appointment {
@@ -150,7 +147,7 @@ model Appointment {
   opRecordId String
   doctorId   String
 
-  status String @default("ASSIGNED")
+  status AppointmentStatus @default(ASSIGNED)
 
   assignedAt DateTime @default(now())
 
@@ -218,4 +215,14 @@ model Billing {
   createdAt DateTime @default(now())
 
   opRecord OPRecord @relation(fields: [opRecordId], references: [id])
+}
+
+model AuditLog {
+  id String @id @default(uuid())
+
+  action String
+
+  userEmail String
+
+  createdAt DateTime @default(now())
 }
