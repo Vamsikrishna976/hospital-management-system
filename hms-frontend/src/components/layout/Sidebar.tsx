@@ -5,13 +5,10 @@ export default function Sidebar() {
   const role = localStorage.getItem("role");
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-
-    if (confirmLogout) {
+    if (window.confirm("Are you sure you want to logout?")) {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
       localStorage.removeItem("user");
-
       navigate("/");
     }
   };
@@ -43,10 +40,45 @@ export default function Sidebar() {
             </Link>
 
             <Link
+              to="/pharmacy/audit-logs"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Audit Logs
+            </Link>
+
+            <Link
+              to="/inventory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Inventory
+            </Link>
+
+            <Link
+              to="/pharmacy/prescriptions"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Prescriptions
+            </Link>
+
+            <Link
+              to="/pharmacy-billing"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Billing
+            </Link>
+
+            <Link
               to="/reports"
               className="block p-3 rounded hover:bg-slate-700"
             >
               Reports
+            </Link>
+
+            <Link
+              to="/pharmacy-analytics"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Analytics
             </Link>
           </>
         )}
@@ -91,6 +123,27 @@ export default function Sidebar() {
               className="block p-3 rounded hover:bg-slate-700"
             >
               Billing History
+            </Link>
+
+            <Link
+              to="/inventory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Inventory
+            </Link>
+
+            <Link
+              to="/pharmacy-billing"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Billing
+            </Link>
+
+            <Link
+              to="/pharmacy-analytics"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Analytics
             </Link>
           </>
         )}
@@ -139,10 +192,45 @@ export default function Sidebar() {
             </Link>
 
             <Link
+              to="/inventory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Inventory
+            </Link>
+
+            <Link
+              to="/pharmacy/prescriptions"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Prescriptions
+            </Link>
+
+            <Link
+              to="/pharmacy-billing"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Billing
+            </Link>
+
+            <Link
+              to="/pharmacy/audit-logs"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Audit Logs
+            </Link>
+
+            <Link
               to="/reports"
               className="block p-3 rounded hover:bg-slate-700"
             >
               Reports
+            </Link>
+
+            <Link
+              to="/pharmacy-analytics"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Analytics
             </Link>
           </>
         )}
@@ -150,7 +238,7 @@ export default function Sidebar() {
 
       <button
         onClick={handleLogout}
-        className="w-40 bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold mt-4"
+        className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold mt-8"
       >
         Logout
       </button>

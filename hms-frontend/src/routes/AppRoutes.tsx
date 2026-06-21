@@ -20,7 +20,11 @@ import ProtectedRoute from "./ProctectedRoute";
 import UserManagement from "../pages/admin/UserManagement";
 import AuditLogs from "../pages/admin/AuditLogs";
 import RoleProtectedRoute from "./RoleProtectedRoute";
-import DashboardLayout from "../components/layout/DashboardLayout";
+import InventoryManagement from "../pages/pharmacy/InventoryManagement";
+import PrescriptionDispense from "../pages/pharmacy/PrescriptionDispense";
+import AuditLogsPharmacy from "../pages/pharmacy/AuditLogsPharmacy";
+import PharmacyBilling from "../pages/pharmacy/PharmacyBilling";
+import PharmacyAnalytics from "../pages/pharmacy/PharmacyAnalytics";
 
 export default function AppRoutes() {
   return (
@@ -155,6 +159,18 @@ export default function AppRoutes() {
             </RoleProtectedRoute>
           }
         />
+
+        <Route path="/inventory" element={<InventoryManagement />} />
+
+        <Route
+          path="/pharmacy/prescriptions"
+          element={<PrescriptionDispense />}
+        />
+        <Route path="/pharmacy/audit-logs" element={<AuditLogsPharmacy />} />
+
+        <Route path="/pharmacy-billing" element={<PharmacyBilling />} />
+
+        <Route path="/pharmacy-analytics" element={<PharmacyAnalytics />} />
       </Routes>
     </BrowserRouter>
   );

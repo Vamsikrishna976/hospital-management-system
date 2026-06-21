@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
@@ -233,227 +234,231 @@ export default function BillingHistory() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-6">Billing History</h1>
+    <DashboardLayout>
+      <div className="max-w-7xl mx-auto p-6">
+        <h1 className="text-4xl font-bold mb-6">Billing History</h1>
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-blue-600 text-white p-4 rounded-xl">
-          <p>Total Bills</p>
-          <h2 className="text-3xl font-bold">{totalBills}</h2>
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          <div className="bg-blue-600 text-white p-4 rounded-xl">
+            <p>Total Bills</p>
+            <h2 className="text-3xl font-bold">{totalBills}</h2>
+          </div>
+
+          <div className="bg-green-600 text-white p-4 rounded-xl">
+            <p>Paid Bills</p>
+            <h2 className="text-3xl font-bold">{paidBills}</h2>
+          </div>
+
+          <div className="bg-orange-500 text-white p-4 rounded-xl">
+            <p>Pending Bills</p>
+            <h2 className="text-3xl font-bold">{pendingBills}</h2>
+          </div>
+
+          <div className="bg-purple-600 text-white p-4 rounded-xl">
+            <p>Revenue</p>
+            <h2 className="text-3xl font-bold">₹{totalRevenue}</h2>
+          </div>
         </div>
 
-        <div className="bg-green-600 text-white p-4 rounded-xl">
-          <p>Paid Bills</p>
-          <h2 className="text-3xl font-bold">{paidBills}</h2>
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search by Bill Number, Patient Name or Mobile"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full border border-gray-300 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          <button
+            onClick={exportToExcel}
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl"
+          >
+            📊 Export Excel
+          </button>
         </div>
 
-        <div className="bg-orange-500 text-white p-4 rounded-xl">
-          <p>Pending Bills</p>
-          <h2 className="text-3xl font-bold">{pendingBills}</h2>
+        <div className="flex justify-between items-center mb-3">
+          <p className="text-gray-600">
+            Showing {filteredBills.length} of {bills.length} bills
+          </p>
         </div>
 
-        <div className="bg-purple-600 text-white p-4 rounded-xl">
-          <p>Revenue</p>
-          <h2 className="text-3xl font-bold">₹{totalRevenue}</h2>
-        </div>
-      </div>
+        <div className="bg-white rounded-xl shadow overflow-hidden">
+          <table className="w-full">
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="p-3">Bill No</th>
+                <th className="p-3">Patient</th>
+                <th className="p-3">Mobile</th>
+                <th className="p-3">OP No</th>
+                <th className="p-3">Amount</th>
+                <th className="p-3">Status</th>
+                <th className="p-3">Date</th>
+                <th className="p-3">Actions</th>
+              </tr>
+            </thead>
 
-      <div className="mb-6">
-        <input
-          type="text"
-          placeholder="Search by Bill Number, Patient Name or Mobile"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full border border-gray-300 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+            <tbody>
+              {filteredBills.length > 0 ? (
+                filteredBills.map((bill: any) => (
+                  <tr key={bill.id} className="border-b hover:bg-gray-50">
+                    <td className="p-3">{bill.billNumber}</td>
 
-        <button
-          onClick={exportToExcel}
-          className="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl"
-        >
-          📊 Export Excel
-        </button>
-      </div>
+                    <td className="p-3">{bill.opRecord.patient.fullName}</td>
 
-      <div className="flex justify-between items-center mb-3">
-        <p className="text-gray-600">
-          Showing {filteredBills.length} of {bills.length} bills
-        </p>
-      </div>
+                    <td className="p-3">{bill.opRecord.patient.mobile}</td>
 
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="p-3">Bill No</th>
-              <th className="p-3">Patient</th>
-              <th className="p-3">Mobile</th>
-              <th className="p-3">OP No</th>
-              <th className="p-3">Amount</th>
-              <th className="p-3">Status</th>
-              <th className="p-3">Date</th>
-              <th className="p-3">Actions</th>
-            </tr>
-          </thead>
+                    <td className="p-3">{bill.opRecord.opNumber}</td>
 
-          <tbody>
-            {filteredBills.length > 0 ? (
-              filteredBills.map((bill: any) => (
-                <tr key={bill.id} className="border-b hover:bg-gray-50">
-                  <td className="p-3">{bill.billNumber}</td>
+                    <td className="p-3 font-bold text-green-700">
+                      ₹{bill.totalAmount}
+                    </td>
 
-                  <td className="p-3">{bill.opRecord.patient.fullName}</td>
+                    <td className="p-3">
+                      <span
+                        className={`px-3 py-1 rounded-full text-white text-sm ${
+                          bill.paymentStatus === "PAID"
+                            ? "bg-green-600"
+                            : "bg-orange-500"
+                        }`}
+                      >
+                        {bill.paymentStatus}
+                      </span>
+                    </td>
 
-                  <td className="p-3">{bill.opRecord.patient.mobile}</td>
+                    <td className="p-3">
+                      {new Date(bill.createdAt).toLocaleDateString()}
+                    </td>
 
-                  <td className="p-3">{bill.opRecord.opNumber}</td>
+                    <td className="p-3 flex gap-2">
+                      <button
+                        onClick={() => setSelectedBill(bill)}
+                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm"
+                      >
+                        View
+                      </button>
 
-                  <td className="p-3 font-bold text-green-700">
-                    ₹{bill.totalAmount}
+                      <button
+                        onClick={() => printBill(bill)}
+                        className="bg-green-600 text-white px-3 py-1 rounded text-sm"
+                      >
+                        Print
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={8} className="p-6 text-center text-gray-500">
+                    No bills found
                   </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
 
-                  <td className="p-3">
+          {selectedBill && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-2xl p-8 w-[600px] shadow-2xl relative">
+                <button
+                  onClick={() => setSelectedBill(null)}
+                  className="absolute top-4 right-4 text-xl font-bold"
+                >
+                  ✕
+                </button>
+
+                <h2 className="text-2xl font-bold mb-6">Bill Details</h2>
+
+                <div className="mb-4 border-b pb-4">
+                  <h3 className="text-lg font-bold text-blue-700">
+                    Sri Kavya Krishna Super Speciality Hospital
+                  </h3>
+
+                  <p className="text-sm text-gray-500">
+                    Bangalore • +91 9876543210
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-blue-50 p-3 rounded-lg mb-4">
+                    <p className="text-sm text-gray-500">Receipt Number</p>
+
+                    <p className="font-bold text-blue-700">
+                      {selectedBill.billNumber}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold">Date</p>
+                    <p>
+                      {new Date(selectedBill.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold">Patient</p>
+                    <p>{selectedBill.opRecord.patient.fullName}</p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold">Mobile</p>
+                    <p>{selectedBill.opRecord.patient.mobile}</p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold">OP Number</p>
+                    <p>{selectedBill.opRecord.opNumber}</p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold">Status</p>
                     <span
-                      className={`px-3 py-1 rounded-full text-white text-sm ${
-                        bill.paymentStatus === "PAID"
+                      className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
+                        selectedBill.paymentStatus === "PAID"
                           ? "bg-green-600"
                           : "bg-orange-500"
                       }`}
                     >
-                      {bill.paymentStatus}
-                    </span>
-                  </td>
-
-                  <td className="p-3">
-                    {new Date(bill.createdAt).toLocaleDateString()}
-                  </td>
-
-                  <td className="p-3 flex gap-2">
-                    <button
-                      onClick={() => setSelectedBill(bill)}
-                      className="bg-blue-600 text-white px-3 py-1 rounded text-sm"
-                    >
-                      View
-                    </button>
-
-                    <button
-                      onClick={() => printBill(bill)}
-                      className="bg-green-600 text-white px-3 py-1 rounded text-sm"
-                    >
-                      Print
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={8} className="p-6 text-center text-gray-500">
-                  No bills found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-
-        {selectedBill && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl p-8 w-[600px] shadow-2xl relative">
-              <button
-                onClick={() => setSelectedBill(null)}
-                className="absolute top-4 right-4 text-xl font-bold"
-              >
-                ✕
-              </button>
-
-              <h2 className="text-2xl font-bold mb-6">Bill Details</h2>
-
-              <div className="mb-4 border-b pb-4">
-                <h3 className="text-lg font-bold text-blue-700">
-                  Sri Kavya Krishna Super Speciality Hospital
-                </h3>
-
-                <p className="text-sm text-gray-500">
-                  Bangalore • +91 9876543210
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-3 rounded-lg mb-4">
-                  <p className="text-sm text-gray-500">Receipt Number</p>
-
-                  <p className="font-bold text-blue-700">
-                    {selectedBill.billNumber}
-                  </p>
+                      {selectedBill.paymentStatus}
+                    </span>{" "}
+                  </div>
                 </div>
 
-                <div>
-                  <p className="font-semibold">Date</p>
-                  <p>{new Date(selectedBill.createdAt).toLocaleDateString()}</p>
-                </div>
+                <hr className="my-6" />
 
-                <div>
-                  <p className="font-semibold">Patient</p>
-                  <p>{selectedBill.opRecord.patient.fullName}</p>
-                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Consultation Fee</span>
+                    <span>₹{selectedBill.consultationFee}</span>
+                  </div>
 
-                <div>
-                  <p className="font-semibold">Mobile</p>
-                  <p>{selectedBill.opRecord.patient.mobile}</p>
-                </div>
+                  <div className="flex justify-between">
+                    <span>Medicine Fee</span>
+                    <span>₹{selectedBill.medicineFee}</span>
+                  </div>
 
-                <div>
-                  <p className="font-semibold">OP Number</p>
-                  <p>{selectedBill.opRecord.opNumber}</p>
-                </div>
+                  <div className="flex justify-between">
+                    <span>Lab Fee</span>
+                    <span>₹{selectedBill.labFee}</span>
+                  </div>
 
-                <div>
-                  <p className="font-semibold">Status</p>
-                  <span
-                    className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
-                      selectedBill.paymentStatus === "PAID"
-                        ? "bg-green-600"
-                        : "bg-orange-500"
-                    }`}
-                  >
-                    {selectedBill.paymentStatus}
-                  </span>{" "}
-                </div>
-              </div>
+                  <div className="flex justify-between">
+                    <span>Other Charges</span>
+                    <span>₹{selectedBill.otherFee}</span>
+                  </div>
 
-              <hr className="my-6" />
+                  <hr />
 
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Consultation Fee</span>
-                  <span>₹{selectedBill.consultationFee}</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span>Medicine Fee</span>
-                  <span>₹{selectedBill.medicineFee}</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span>Lab Fee</span>
-                  <span>₹{selectedBill.labFee}</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span>Other Charges</span>
-                  <span>₹{selectedBill.otherFee}</span>
-                </div>
-
-                <hr />
-
-                <div className="flex justify-between text-xl font-bold text-blue-700">
-                  <span>Total Amount</span>
-                  <span>₹{selectedBill.totalAmount}</span>
+                  <div className="flex justify-between text-xl font-bold text-blue-700">
+                    <span>Total Amount</span>
+                    <span>₹{selectedBill.totalAmount}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

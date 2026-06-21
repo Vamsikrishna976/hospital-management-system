@@ -172,6 +172,8 @@ model Prescription {
 
   followUpDate DateTime?
 
+  dispensed Boolean @default(false)
+
   createdAt DateTime @default(now())
 
   appointment Appointment @relation(fields: [appointmentId], references: [id])
@@ -228,4 +230,67 @@ model AuditLog {
   userEmail String
 
   createdAt DateTime @default(now())
+}
+
+model MedicineInventory {
+  id String @id @default(uuid())
+
+  medicineCode String @unique
+  medicineName String
+
+  category String?
+
+  stockQuantity Int @default(0)
+
+  unitPrice Float
+
+  expiryDate DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  billItems PharmacyBillItem[]
+}
+
+model PharmacyAuditLog {
+  id String @id @default(uuid())
+
+  medicineName String
+
+  action String
+
+  quantity Int
+
+  createdAt DateTime @default(now())
+}
+
+model PharmacyBill {
+  id String @id @default(uuid())
+
+  billNumber String @unique
+
+  patientName String
+
+  totalAmount Float
+
+  createdAt DateTime @default(now())
+
+  items PharmacyBillItem[]
+}
+
+model PharmacyBillItem {
+  id String @id @default(uuid())
+
+  billId String
+  medicineId String
+
+  quantity Int
+
+  unitPrice Float
+
+  totalPrice Float
+
+  bill PharmacyBill @relation(fields: [billId], references: [id])
+
+  medicine MedicineInventory @relation(fields: [medicineId], references: [id])
 }
