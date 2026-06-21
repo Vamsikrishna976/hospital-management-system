@@ -8,29 +8,30 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (
-    e: React.FormEvent
-  ) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const data = await loginUser(
-        email,
-        password
-      );
+      const data = await loginUser(email, password);
 
-      localStorage.setItem(
-        "token",
-        data.token
-      );
+      localStorage.setItem("token", data.token);
 
-      localStorage.setItem(
-        "role",
-        data.user.role
-      );
+      localStorage.setItem("role", data.user.role);
 
-      navigate("/dashboard");
+      switch (data.user.role) {
+        case "DOCTOR":
+          navigate("/doctor/dashboard");
+          break;
 
+        case "ADMIN":
+        case "MANAGEMENT":
+        case "RECEPTIONIST":
+          navigate("/dashboard");
+          break;
+
+        default:
+          navigate("/");
+      }
     } catch {
       alert("Invalid Credentials");
     }
@@ -42,18 +43,14 @@ export default function Login() {
         onSubmit={handleLogin}
         className="bg-white p-8 rounded-xl shadow-lg w-96"
       >
-        <h1 className="text-3xl font-bold mb-6">
-          HMS Login
-        </h1>
+        <h1 className="text-3xl font-bold mb-6">HMS Login</h1>
 
         <input
           type="email"
           placeholder="Email"
           className="border p-3 w-full mb-4 rounded"
           value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
@@ -61,9 +58,7 @@ export default function Login() {
           placeholder="Password"
           className="border p-3 w-full mb-4 rounded"
           value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <button

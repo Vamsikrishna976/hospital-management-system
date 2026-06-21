@@ -46,6 +46,33 @@ export const getReports = async (req: Request, res: Response) => {
       revenue: 0,
     }));
 
+    const monthlyPatients = [
+      { month: "Jan", patients: 0 },
+      { month: "Feb", patients: 0 },
+      { month: "Mar", patients: 0 },
+      { month: "Apr", patients: 0 },
+      { month: "May", patients: 0 },
+      { month: "Jun", patients: 0 },
+      { month: "Jul", patients: 0 },
+      { month: "Aug", patients: 0 },
+      { month: "Sep", patients: 0 },
+      { month: "Oct", patients: 0 },
+      { month: "Nov", patients: 0 },
+      { month: "Dec", patients: 0 },
+    ];
+
+    const patients = await prisma.patient.findMany({
+      select: {
+        createdAt: true,
+      },
+    });
+
+    patients.forEach((patient) => {
+      const month = new Date(patient.createdAt).getMonth();
+
+      monthlyPatients[month].patients++;
+    });
+
     bills.forEach((bill) => {
       const monthIndex = new Date(bill.createdAt).getMonth();
 
@@ -65,6 +92,7 @@ export const getReports = async (req: Request, res: Response) => {
       totalAppointments,
       totalBills,
       totalRevenue: revenue._sum.totalAmount || 0,
+      monthlyPatients,
 
       monthlyRevenue,
     });

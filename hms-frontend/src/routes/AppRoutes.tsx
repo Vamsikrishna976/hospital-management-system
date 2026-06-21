@@ -19,15 +19,28 @@ import Reports from "../pages/reports/Reports";
 import ProtectedRoute from "./ProctectedRoute";
 import UserManagement from "../pages/admin/UserManagement";
 import AuditLogs from "../pages/admin/AuditLogs";
+import RoleProtectedRoute from "./RoleProtectedRoute";
+import DashboardLayout from "../components/layout/DashboardLayout";
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Login page without sidebar */}
         <Route path="/" element={<Login />} />
 
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/*  */}
 
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute
+              allowedRoles={["ADMIN", "MANAGEMENT", "RECEPTIONIST"]}
+            >
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/patients/search" element={<PatientSearch />} />
 
         <Route path="/op/new" element={<NewOP />} />
@@ -115,7 +128,33 @@ export default function AppRoutes() {
         />
 
         <Route path="/audit-logs" element={<AuditLogs />} />
-        
+
+        <Route
+          path="/users"
+          element={
+            <RoleProtectedRoute allowedRoles={["ADMIN"]}>
+              <UserManagement />
+            </RoleProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/audit-logs"
+          element={
+            <RoleProtectedRoute allowedRoles={["ADMIN"]}>
+              <AuditLogs />
+            </RoleProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/reports"
+          element={
+            <RoleProtectedRoute allowedRoles={["ADMIN", "MANAGEMENT"]}>
+              <Reports />
+            </RoleProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

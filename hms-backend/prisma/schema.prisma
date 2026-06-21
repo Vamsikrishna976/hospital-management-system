@@ -147,6 +147,9 @@ model Appointment {
   opRecordId String
   doctorId   String
 
+  appointmentDate DateTime?
+  appointmentTime String?
+
   status AppointmentStatus @default(ASSIGNED)
 
   assignedAt DateTime @default(now())

@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import DashboardLayout from "../../components/layout/DashboardLayout";
 import axios from "axios";
 
 export default function DoctorDashboard() {
   const [patients, setPatients] = useState<any[]>([]);
   const [doctorId, setDoctorId] = useState("");
+  const [doctors, setDoctors] = useState<any[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
+  const fetchDoctors = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/doctors");
+
+      setDoctors(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchPatients = async () => {
     try {
@@ -20,17 +36,24 @@ export default function DoctorDashboard() {
   };
 
   return (
+    <DashboardLayout>
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">Doctor Dashboard</h1>
 
       <div className="flex gap-3 mb-6">
-        <input
-          type="text"
-          placeholder="Enter Doctor ID"
+        <select
           value={doctorId}
           onChange={(e) => setDoctorId(e.target.value)}
           className="border p-3 rounded w-full"
-        />
+        >
+          <option value="">Select Doctor</option>
+
+          {doctors.map((doctor: any) => (
+            <option key={doctor.id} value={doctor.id}>
+              {doctor.fullName} ({doctor.doctorCode})
+            </option>
+          ))}
+        </select>
 
         <button
           onClick={fetchPatients}
@@ -67,5 +90,6 @@ export default function DoctorDashboard() {
         </div>
       ))}
     </div>
+    </DashboardLayout>
   );
 }
