@@ -1,9 +1,15 @@
-import type { ReactNode } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../src/components/layout/Sidebar";
+import Header from "../../src/components/layout/Header";
 
-interface DashboardLayoutProps {
-  children: ReactNode;
-}
-
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  return <div className="min-h-screen bg-gray-100 p-6">{children}</div>;
+export default function DashboardLayout() {
+  return (
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1">
+        <Header />
+        <Outlet />
+      </div>
+    </div>
+  );
 }

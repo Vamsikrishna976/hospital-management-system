@@ -16,8 +16,12 @@ export default function ProtectedRoute({
   }
 
   if (!allowedRoles.includes(role)) {
-    return <Navigate to="/dashboard" replace />;
+  if (role === "DOCTOR") {
+    return <Navigate to="/doctor/dashboard" replace />;
   }
+
+  return <Navigate to="/dashboard" replace />;
+}
 
   return <>{children}</>;
 }

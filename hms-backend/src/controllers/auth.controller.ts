@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import prisma from "../utils/prisma.ts";
 
 export const login = async (req: Request, res: Response) => {
+    console.log("LOGIN HIT");
+
   try {
     const { email, password } = req.body;
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import DashboardLayout from "../../components/layout/DashboardLayout";
 import axios from "axios";
 
 export default function MedicineEntry() {
@@ -55,7 +56,7 @@ export default function MedicineEntry() {
 
       alert("All Medicines Added");
 
-      navigate("/doctor/prescription", {
+      navigate("/doctor/dashboard", {
         state: {
           prescriptionId,
         },
@@ -67,6 +68,7 @@ export default function MedicineEntry() {
   };
 
   return (
+    <DashboardLayout>
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Add Medicines</h1>
 
@@ -121,5 +123,6 @@ export default function MedicineEntry() {
         </button>
       </form>
     </div>
+    </DashboardLayout>
   );
 }

@@ -3,8 +3,7 @@ import prisma from "../utils/prisma.ts";
 
 export const assignDoctor = async (req: Request, res: Response) => {
   try {
-    const { doctorId, opRecordId } = req.body;
-
+    const { doctorId, opRecordId, appointmentDate, appointmentTime } = req.body;
     const count = await prisma.appointment.count();
 
     const appointmentNo = `APT-${String(count + 1).padStart(5, "0")}`;
@@ -14,6 +13,9 @@ export const assignDoctor = async (req: Request, res: Response) => {
         appointmentNo,
         doctorId,
         opRecordId,
+        appointmentDate: appointmentDate ? new Date(appointmentDate) : null,
+
+        appointmentTime,
       },
     });
 
