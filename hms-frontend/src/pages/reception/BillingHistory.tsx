@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import DashboardLayout from "@/components/layout/DashboardLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 

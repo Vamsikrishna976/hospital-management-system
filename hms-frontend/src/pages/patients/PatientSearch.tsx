@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchPatient } from "../../services/patient.service";
 import PatientRegister from "./PatientRegister";
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 
 export default function PatientSearch() {
   const [mobile, setMobile] = useState("");

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createPatient } from "../../services/patient.service";
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 
 export default function PatientRegister() {
   const [formData, setFormData] = useState({

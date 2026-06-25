@@ -23,6 +23,8 @@ import pharmacyRoutes from "./routes/pharmacy.routes.ts";
 import pharmacyBillingRoutes from "./routes/pharmacyBilling.routes.ts";
 import notificationRoutes from "./routes/notification.routes.ts";
 import pharmacyAnalyticsRoutes from "./routes/pharmacyAnalytics.routes.ts";
+import labRoutes from "./routes/lab.routes.ts";
+import labReportRoutes from "./routes/labReport.routes.ts";
 
 dotenv.config();
 
@@ -55,6 +57,8 @@ app.use("/api/pharmacy", pharmacyRoutes);
 app.use("/api/pharmacy-bills", pharmacyBillingRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/pharmacy-analytics", pharmacyAnalyticsRoutes);
+app.use("/api/lab", labRoutes);
+app.use("/api/lab-report", labReportRoutes);
 
 const PORT = process.env.PORT || 5000;
 

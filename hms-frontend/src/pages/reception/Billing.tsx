@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas-pro";
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 
 export default function Billing() {
   const [opRecordId, setOpRecordId] = useState("");

@@ -27,6 +27,29 @@ export const searchPatient = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllPatients = async (req: Request, res: Response) => {
+  try {
+    const patients = await prisma.patient.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      count: patients.length,
+      data: patients,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch patients",
+    });
+  }
+};
+
 export const createPatient = async (req: Request, res: Response) => {
   try {
     console.log("PATIENT REQUEST:");

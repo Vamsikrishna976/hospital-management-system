@@ -80,6 +80,41 @@ export default function Sidebar() {
             >
               Pharmacy Analytics
             </Link>
+
+            <Link
+              to="/laboratory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Laboratory Dashboard
+            </Link>
+
+            <Link
+              to="/laboratory/tests"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Lab Tests
+            </Link>
+
+            <Link
+              to="/laboratory/new-order"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              New Lab Order
+            </Link>
+
+            <Link
+              to="/laboratory/pending"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pending Lab Orders
+            </Link>
+
+            <Link
+              to="/laboratory/reports"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Completed Lab Reports
+            </Link>
           </>
         )}
 
@@ -144,6 +179,41 @@ export default function Sidebar() {
               className="block p-3 rounded hover:bg-slate-700"
             >
               Pharmacy Analytics
+            </Link>
+
+            <Link
+              to="/laboratory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Laboratory Dashboard
+            </Link>
+
+            <Link
+              to="/laboratory/tests"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Lab Tests
+            </Link>
+
+            <Link
+              to="/laboratory/new-order"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              New Lab Order
+            </Link>
+
+            <Link
+              to="/laboratory/pending"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pending Lab Orders
+            </Link>
+
+            <Link
+              to="/laboratory/reports"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Completed Lab Reports
             </Link>
           </>
         )}

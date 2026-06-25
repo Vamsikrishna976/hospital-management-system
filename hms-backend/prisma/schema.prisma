@@ -42,6 +42,8 @@ model Patient {
 
   opRecords OPRecord[]
 
+  labOrders LabOrder[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -131,6 +133,8 @@ model Doctor {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   appointments Appointment[]
+
+  labOrders LabOrder[]
 }
 
 enum AppointmentStatus {
@@ -281,7 +285,7 @@ model PharmacyBill {
 model PharmacyBillItem {
   id String @id @default(uuid())
 
-  billId String
+  billId     String
   medicineId String
 
   quantity Int
@@ -293,4 +297,57 @@ model PharmacyBillItem {
   bill PharmacyBill @relation(fields: [billId], references: [id])
 
   medicine MedicineInventory @relation(fields: [medicineId], references: [id])
+}
+
+model LabTest {
+  id          String  @id @default(uuid())
+  testCode    String  @unique
+  testName    String
+  category    String
+  price       Float
+  description String?
+
+  createdAt DateTime @default(now())
+
+  orderItems LabOrderItem[]
+}
+
+model LabOrder {
+  id String @id @default(uuid())
+
+  patientId String
+  doctorId  String
+
+  status LabOrderStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
+
+  items LabOrderItem[]
+}
+
+model LabOrderItem {
+  id String @id @default(uuid())
+
+  orderId   String
+  labTestId String
+
+  result         String?
+  unit           String?
+  referenceRange String?
+  remarks        String?
+
+  completedAt DateTime?
+
+  order   LabOrder @relation(fields: [orderId], references: [id])
+  labTest LabTest  @relation(fields: [labTestId], references: [id])
+}
+
+enum LabOrderStatus {
+  PENDING
+  SAMPLE_COLLECTED
+  PROCESSING
+  COMPLETED
 }
