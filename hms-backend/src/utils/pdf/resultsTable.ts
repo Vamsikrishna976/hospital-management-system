@@ -16,7 +16,7 @@ const COL = {
   remarks: 60,
 };
 
-const drawHeader = (doc: PDFDocument, y: number) => {
+const drawHeader = (doc: any, y: number) => {
   doc
     .roundedRect(TABLE.x, y, TABLE.width, TABLE.headerHeight, 4)
     .fill("#2563EB");
@@ -47,7 +47,7 @@ const drawHeader = (doc: PDFDocument, y: number) => {
 };
 
 export const drawResultsTable = (
-  doc: PDFDocument,
+  doc: any,
   items: any[]
 ) => {
 

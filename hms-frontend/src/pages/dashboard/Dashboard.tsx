@@ -33,6 +33,7 @@ export default function Dashboard() {
   const [activities, setActivities] = useState<any[]>([]);
   const [monthlyRevenue, setMonthlyRevenue] = useState<any[]>([]);
   const [monthlyPatients, setMonthlyPatients] = useState<any[]>([]);
+  
   const [notifications, setNotifications] = useState({
     lowStockCount: 0,
     expiringSoonCount: 0,

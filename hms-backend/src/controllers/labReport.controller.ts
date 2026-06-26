@@ -8,6 +8,8 @@ import { drawDoctorCard } from "../utils/pdf/doctorCard.ts";
 import { drawResultsTable } from "../utils/pdf/resultsTable.ts";
 import { drawInterpretation } from "../utils/pdf/interpretation.ts";
 import { drawSignatures } from "../utils/pdf/signatures.ts";
+import { drawFooter } from "../utils/pdf/footer.ts";
+import { generateQRCode } from "../utils/pdf/qrCode.ts";
 
 class LabReportController {
   async generateReport(req: Request, res: Response) {
@@ -22,6 +24,10 @@ class LabReportController {
           message: "Lab Report not found",
         });
       }
+
+      const verificationUrl = `http://localhost:5000/api/lab-report/${report.id}`;
+
+      const qrBuffer = await generateQRCode(verificationUrl);
 
       const doc = new PDFDocument({
         size: "A4",
@@ -43,14 +49,15 @@ class LabReportController {
       drawHospitalHeader(doc);
 
       doc.y = 180;
+      console.log("After Header:", doc.y);
 
       // =====================================================
       // REPORT DETAILS BOX
       // =====================================================
 
-      drawReportInfo(doc, report);
-
+      drawReportInfo(doc, report, qrBuffer);
       doc.moveDown();
+      console.log("After Report:", doc.y);
 
       // =====================================================
       // PATIENT INFORMATION
@@ -59,6 +66,7 @@ class LabReportController {
       drawPatientCard(doc, report.patient);
 
       doc.moveDown();
+      console.log("After Patient:", doc.y);
 
       // =====================================================
       // DOCTOR INFORMATION
@@ -67,29 +75,35 @@ class LabReportController {
       drawDoctorCard(doc, report.doctor, report.status);
 
       doc.moveDown();
+      console.log("After Doctor:", doc.y);
 
       // =====================================================
       // RESULTS TABLE
       // =====================================================
 
       drawResultsTable(doc, report.items);
-
-      doc.moveDown();
+      console.log("After Results:", doc.y);
 
       // =====================================================
       // INTERPRETATION
       // =====================================================
-      drawInterpretation(doc, report.items);
 
-      doc.moveDown();
+      drawInterpretation(doc, report.items);
+      console.log("After Interpretation:", doc.y);
+
+      // =====================================================
+      // AUTHORIZATION
+      // =====================================================a
+
+      drawSignatures(doc, report.doctor);
+      console.log("After Authorization:", doc.y);
 
       // =====================================================
       // FOOTER
       // =====================================================
 
-      drawSignatures(doc, report.doctor);
-
-      doc.moveDown();
+      drawFooter(doc);
+      console.log("After Footer:", doc.y);
 
       doc.end();
     } catch (error) {

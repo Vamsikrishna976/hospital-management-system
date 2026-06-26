@@ -70,7 +70,9 @@ export const createMedicineBill = async (req: Request, res: Response) => {
   try {
     const { patientName, items } = req.body;
 
-    let grandTotal = 0;
+    let subtotal = 0;
+    let totalGST = 0;
+    const discount = 0;
 
     const count = await prisma.pharmacyBill.count();
 
@@ -91,35 +93,76 @@ export const createMedicineBill = async (req: Request, res: Response) => {
         });
       }
 
-      const totalPrice = medicine.unitPrice * item.quantity;
+      // -----------------------------
+      // Line Calculations
+      // -----------------------------
 
-      grandTotal += totalPrice;
+      const lineSubtotal = medicine.unitPrice * item.quantity;
+
+      const gst = Number((lineSubtotal * 0.12).toFixed(2));
+
+      const totalPrice = Number((lineSubtotal + gst).toFixed(2));
+
+      subtotal += lineSubtotal;
+      totalGST += gst;
 
       billItemsData.push({
         medicineId: medicine.id,
         quantity: item.quantity,
         unitPrice: medicine.unitPrice,
+        gst,
         totalPrice,
       });
     }
+
+    // -----------------------------
+    // Bill Summary
+    // -----------------------------
+
+    subtotal = Number(subtotal.toFixed(2));
+    totalGST = Number(totalGST.toFixed(2));
+
+    const grandTotal = Number((subtotal + totalGST - discount).toFixed(2));
+
+    const paidAmount = grandTotal;
+
+    const dueAmount = 0;
+
+    const paymentStatus = "PAID";
+
+    // -----------------------------
+    // Create Bill
+    // -----------------------------
 
     const bill = await prisma.pharmacyBill.create({
       data: {
         billNumber,
         patientName,
+
+        subtotal,
+        gstAmount: totalGST,
+        discount,
+
         totalAmount: grandTotal,
+
+        paidAmount,
+        dueAmount,
+        paymentStatus,
       },
     });
 
-    for (const item of billItemsData) {
-      console.log("Creating item:", item);
+    // -----------------------------
+    // Create Bill Items
+    // -----------------------------
 
+    for (const item of billItemsData) {
       await prisma.pharmacyBillItem.create({
         data: {
           billId: bill.id,
           medicineId: item.medicineId,
           quantity: item.quantity,
           unitPrice: item.unitPrice,
+          gst: item.gst,
           totalPrice: item.totalPrice,
         },
       });
@@ -135,27 +178,41 @@ export const createMedicineBill = async (req: Request, res: Response) => {
         },
       });
 
+      const medicine = await prisma.medicineInventory.findUnique({
+        where: {
+          id: item.medicineId,
+        },
+      });
+
       await prisma.pharmacyAuditLog.create({
         data: {
-          medicineName:
-            (
-              await prisma.medicineInventory.findUnique({
-                where: {
-                  id: item.medicineId,
-                },
-              })
-            )?.medicineName || "Unknown",
-
+          medicineName: medicine?.medicineName ?? "Unknown",
           action: "BILLED",
-
           quantity: item.quantity,
         },
       });
     }
 
-    return res.json({
-      bill,
-      items: billItemsData,
+    // -----------------------------
+    // Return Bill
+    // -----------------------------
+
+    const completeBill = await prisma.pharmacyBill.findUnique({
+      where: {
+        id: bill.id,
+      },
+      include: {
+        items: {
+          include: {
+            medicine: true,
+          },
+        },
+      },
+    });
+
+    return res.status(201).json({
+      message: "Medicine bill created successfully",
+      data: completeBill,
     });
   } catch (error) {
     console.error(error);
@@ -184,11 +241,21 @@ export const getBillDetails = async (req: Request, res: Response) => {
       },
     });
 
-    return res.json(bill);
+    if (!bill) {
+      return res.status(404).json({
+        message: "Bill not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: bill,
+    });
   } catch (error) {
     console.error(error);
 
     return res.status(500).json({
+      success: false,
       message: "Failed to fetch bill",
     });
   }

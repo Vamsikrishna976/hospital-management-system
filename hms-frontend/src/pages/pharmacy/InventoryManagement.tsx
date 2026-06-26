@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import DashboardLayout from "@/layouts/DashboardLayout";
 import axios from "axios";
 
 type MedicineForm = {
@@ -160,232 +161,236 @@ export default function InventoryManagement() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Pharmacy Inventory</h1>
+    <DashboardLayout>
+      <div className="max-w-5xl mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-6">Pharmacy Inventory</h1>
 
-      {/* Dashboard Cards */}
-      <div className="grid md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-blue-600 text-white p-4 rounded-xl">
-          <p>Total Medicines</p>
-          <h2 className="text-3xl font-bold">{totalMedicines}</h2>
+        {/* Dashboard Cards */}
+        <div className="grid md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-blue-600 text-white p-4 rounded-xl">
+            <p>Total Medicines</p>
+            <h2 className="text-3xl font-bold">{totalMedicines}</h2>
+          </div>
+
+          <div className="bg-green-600 text-white p-4 rounded-xl">
+            <p>Total Stock</p>
+            <h2 className="text-3xl font-bold">{totalStock}</h2>
+          </div>
+
+          <div className="bg-orange-500 text-white p-4 rounded-xl">
+            <p>Low Stock</p>
+            <h2 className="text-3xl font-bold">{lowStock}</h2>
+          </div>
+
+          <div className="bg-red-600 text-white p-4 rounded-xl">
+            <p>Out Of Stock</p>
+            <h2 className="text-3xl font-bold">{outOfStock}</h2>
+          </div>
+
+          <div className="bg-yellow-500 text-white p-4 rounded-xl">
+            <p>Expiring Soon</p>
+            <h2 className="text-3xl font-bold">{expiringSoon}</h2>
+          </div>
         </div>
 
-        <div className="bg-green-600 text-white p-4 rounded-xl">
-          <p>Total Stock</p>
-          <h2 className="text-3xl font-bold">{totalStock}</h2>
+        <div className="bg-white rounded-xl shadow p-6 mb-6">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">
+            🚨 Low Stock Medicines
+          </h2>
+
+          {lowStockMedicines.length === 0 ? (
+            <p className="text-green-600">
+              All medicines have sufficient stock.
+            </p>
+          ) : (
+            <table className="w-full">
+              <thead>
+                <tr className="bg-red-100">
+                  <th className="p-3 text-left">Medicine</th>
+                  <th className="p-3 text-left">Stock</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {lowStockMedicines.map((medicine) => (
+                  <tr key={medicine.id} className="border-b">
+                    <td className="p-3">{medicine.medicineName}</td>
+
+                    <td className="p-3">
+                      <span className="bg-red-500 text-white px-3 py-1 rounded-full">
+                        {medicine.stockQuantity}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+        {/* Add Medicine Form */}
+        <div className="bg-white shadow rounded-xl p-6 space-y-4">
+          <input
+            placeholder="Medicine Code"
+            className="border p-3 w-full rounded"
+            value={form.medicineCode}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                medicineCode: e.target.value,
+              })
+            }
+          />
+
+          <input
+            placeholder="Medicine Name"
+            className="border p-3 w-full rounded"
+            value={form.medicineName}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                medicineName: e.target.value,
+              })
+            }
+          />
+
+          <input
+            placeholder="Category"
+            className="border p-3 w-full rounded"
+            value={form.category}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                category: e.target.value,
+              })
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="Stock Quantity"
+            className="border p-3 w-full rounded"
+            value={form.stockQuantity}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                stockQuantity: e.target.value,
+              })
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="Unit Price"
+            className="border p-3 w-full rounded"
+            value={form.unitPrice}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                unitPrice: e.target.value,
+              })
+            }
+          />
+
+          <input
+            type="date"
+            className="border p-3 w-full rounded"
+            value={form.expiryDate}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                expiryDate: e.target.value,
+              })
+            }
+          />
+
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-600 text-white px-6 py-3 rounded"
+          >
+            {editingId ? "Update Medicine" : "Add Medicine"}
+          </button>
         </div>
 
-        <div className="bg-orange-500 text-white p-4 rounded-xl">
-          <p>Low Stock</p>
-          <h2 className="text-3xl font-bold">{lowStock}</h2>
+        <div className="mt-6 mb-4">
+          <input
+            type="text"
+            placeholder="Search Medicine..."
+            className="border p-3 w-full rounded"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
 
-        <div className="bg-red-600 text-white p-4 rounded-xl">
-          <p>Out Of Stock</p>
-          <h2 className="text-3xl font-bold">{outOfStock}</h2>
-        </div>
-
-        <div className="bg-yellow-500 text-white p-4 rounded-xl">
-          <p>Expiring Soon</p>
-          <h2 className="text-3xl font-bold">{expiringSoon}</h2>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-xl shadow p-6 mb-6">
-        <h2 className="text-2xl font-bold text-red-600 mb-4">
-          🚨 Low Stock Medicines
-        </h2>
-
-        {lowStockMedicines.length === 0 ? (
-          <p className="text-green-600">All medicines have sufficient stock.</p>
-        ) : (
+        {/* Medicine Table */}
+        <div className="mt-8 bg-white rounded-xl shadow overflow-hidden">
           <table className="w-full">
-            <thead>
-              <tr className="bg-red-100">
-                <th className="p-3 text-left">Medicine</th>
-                <th className="p-3 text-left">Stock</th>
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="p-3">Code</th>
+                <th className="p-3">Medicine</th>
+                <th className="p-3">Category</th>
+                <th className="p-3">Stock</th>
+                <th className="p-3">Price</th>
+                <th className="p-3">Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              {lowStockMedicines.map((medicine) => (
+              {filteredMedicines.map((medicine) => (
                 <tr key={medicine.id} className="border-b">
+                  <td className="p-3">{medicine.medicineCode}</td>
+
                   <td className="p-3">{medicine.medicineName}</td>
 
-                  <td className="p-3">
-                    <span className="bg-red-500 text-white px-3 py-1 rounded-full">
-                      {medicine.stockQuantity}
-                    </span>
+                  <td className="p-3">{medicine.category}</td>
+
+                  <td
+                    className={`p-3 font-bold ${
+                      medicine.stockQuantity < 20
+                        ? "text-red-600"
+                        : "text-green-600"
+                    }`}
+                  >
+                    {medicine.stockQuantity}
+                  </td>
+
+                  <td className="p-3">₹{medicine.unitPrice}</td>
+
+                  <td className="p-3 space-x-2">
+                    <button
+                      onClick={() => handleEdit(medicine)}
+                      className="bg-yellow-500 text-white px-3 py-1 rounded"
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(medicine.id)}
+                      className="bg-red-600 text-white px-3 py-1 rounded"
+                    >
+                      Delete
+                    </button>
+
+                    <button
+                      onClick={() => handleStockUpdate(medicine.id, "IN")}
+                      className="bg-green-600 text-white px-3 py-1 rounded"
+                    >
+                      + Stock
+                    </button>
+
+                    <button
+                      onClick={() => handleStockUpdate(medicine.id, "OUT")}
+                      className="bg-orange-500 text-white px-3 py-1 rounded"
+                    >
+                      - Stock
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        )}
+        </div>
       </div>
-      {/* Add Medicine Form */}
-      <div className="bg-white shadow rounded-xl p-6 space-y-4">
-        <input
-          placeholder="Medicine Code"
-          className="border p-3 w-full rounded"
-          value={form.medicineCode}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              medicineCode: e.target.value,
-            })
-          }
-        />
-
-        <input
-          placeholder="Medicine Name"
-          className="border p-3 w-full rounded"
-          value={form.medicineName}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              medicineName: e.target.value,
-            })
-          }
-        />
-
-        <input
-          placeholder="Category"
-          className="border p-3 w-full rounded"
-          value={form.category}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              category: e.target.value,
-            })
-          }
-        />
-
-        <input
-          type="number"
-          placeholder="Stock Quantity"
-          className="border p-3 w-full rounded"
-          value={form.stockQuantity}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              stockQuantity: e.target.value,
-            })
-          }
-        />
-
-        <input
-          type="number"
-          placeholder="Unit Price"
-          className="border p-3 w-full rounded"
-          value={form.unitPrice}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              unitPrice: e.target.value,
-            })
-          }
-        />
-
-        <input
-          type="date"
-          className="border p-3 w-full rounded"
-          value={form.expiryDate}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              expiryDate: e.target.value,
-            })
-          }
-        />
-
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white px-6 py-3 rounded"
-        >
-          {editingId ? "Update Medicine" : "Add Medicine"}
-        </button>
-      </div>
-
-      <div className="mt-6 mb-4">
-        <input
-          type="text"
-          placeholder="Search Medicine..."
-          className="border p-3 w-full rounded"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-
-      {/* Medicine Table */}
-      <div className="mt-8 bg-white rounded-xl shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="p-3">Code</th>
-              <th className="p-3">Medicine</th>
-              <th className="p-3">Category</th>
-              <th className="p-3">Stock</th>
-              <th className="p-3">Price</th>
-              <th className="p-3">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredMedicines.map((medicine) => (
-              <tr key={medicine.id} className="border-b">
-                <td className="p-3">{medicine.medicineCode}</td>
-
-                <td className="p-3">{medicine.medicineName}</td>
-
-                <td className="p-3">{medicine.category}</td>
-
-                <td
-                  className={`p-3 font-bold ${
-                    medicine.stockQuantity < 20
-                      ? "text-red-600"
-                      : "text-green-600"
-                  }`}
-                >
-                  {medicine.stockQuantity}
-                </td>
-
-                <td className="p-3">₹{medicine.unitPrice}</td>
-
-                <td className="p-3 space-x-2">
-                  <button
-                    onClick={() => handleEdit(medicine)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => handleDelete(medicine.id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-
-                  <button
-                    onClick={() => handleStockUpdate(medicine.id, "IN")}
-                    className="bg-green-600 text-white px-3 py-1 rounded"
-                  >
-                    + Stock
-                  </button>
-
-                  <button
-                    onClick={() => handleStockUpdate(medicine.id, "OUT")}
-                    className="bg-orange-500 text-white px-3 py-1 rounded"
-                  >
-                    - Stock
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </DashboardLayout>
   );
 }

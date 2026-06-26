@@ -1,12 +1,10 @@
 import PDFDocument from "pdfkit";
 
-export const drawSignatures = (
-  doc: PDFDocument,
-  doctor: any
-) => {
+export const drawSignatures = (doc: any, doctor: any) => {
+  // New Page if needed
+  const sectionHeight = 130;
 
-  // Add a new page if there's not enough space
-  if (doc.y > 650) {
+  if (doc.y + sectionHeight > 730) {
     doc.addPage();
   }
 
@@ -16,80 +14,61 @@ export const drawSignatures = (
     .fillColor("#1E3A8A")
     .text("AUTHORIZATION", 40, doc.y);
 
-  doc.moveDown();
+  doc.moveDown(0.6);
 
   const y = doc.y;
 
-  doc
-    .roundedRect(40, y, 515, 150, 8)
-    .fillAndStroke("#FFFFFF", "#D1D5DB");
+  doc.roundedRect(40, y, 515, 105, 8).fillAndStroke("#FFFFFF", "#D1D5DB");
 
-  // -------------------------
+  //---------------------------------------
   // Signature Lines
-  // -------------------------
+  //---------------------------------------
 
-  const startY = y + 90;
+  const lineY = y + 60;
 
-  // Lab Technician
-  doc
-    .moveTo(70, startY)
-    .lineTo(180, startY)
-    .strokeColor("#999")
-    .stroke();
+  doc.strokeColor("#808080").lineWidth(1);
 
-  // Pathologist
-  doc
-    .moveTo(235, startY)
-    .lineTo(345, startY)
-    .stroke();
+  doc.moveTo(70, lineY).lineTo(150, lineY).stroke();
 
-  // Doctor
-  doc
-    .moveTo(400, startY)
-    .lineTo(510, startY)
-    .stroke();
+  doc.moveTo(235, lineY).lineTo(315, lineY).stroke();
 
-  // Titles
+  doc.moveTo(400, lineY).lineTo(480, lineY).stroke();
 
-  doc
-    .font("Helvetica-Bold")
-    .fontSize(10)
-    .fillColor("#1E3A8A");
+  //---------------------------------------
+  // Labels
+  //---------------------------------------
 
-  doc.text("Lab Technician", 75, startY + 8);
+  doc.font("Helvetica-Bold").fontSize(9).fillColor("#1E3A8A");
 
-  doc.text("Pathologist", 245, startY + 8);
+  doc.text("Lab Technician", 68, lineY + 8);
 
-  doc.text("Consulting Doctor", 390, startY + 8);
+  doc.text("Pathologist", 238, lineY + 8);
 
+  doc.text("Consulting Doctor", 395, lineY + 8);
+
+  //---------------------------------------
   // Names
+  //---------------------------------------
 
-  doc
-    .font("Helvetica")
-    .fontSize(10)
-    .fillColor("black");
+  doc.font("Helvetica").fontSize(8).fillColor("black");
 
-  doc.text("Ramesh Kumar", 70, startY + 24);
+  doc.text("Ramesh Kumar", 62, lineY + 24);
 
-  doc.text("Dr. Sneha Rao", 235, startY + 24);
+  doc.text("Dr. Sneha Rao", 228, lineY + 24);
 
-  doc.text(doctor.fullName, 400, startY + 24);
+  doc.text(doctor.fullName, 390, lineY + 24);
 
+  //---------------------------------------
   // IDs
+  //---------------------------------------
 
-  doc
-    .fontSize(8)
-    .fillColor("gray");
+  doc.fontSize(6).fillColor("gray");
 
-  doc.text("Employee ID : LT-102", 70, startY + 40);
+  doc.text("Employee ID : LT-102", 60, lineY + 36);
 
-  doc.text("Reg No : PATH-4582", 235, startY + 40);
+  doc.text("Reg No : PATH-4582", 225, lineY + 36);
 
-  doc.text(
-    `Doctor Code : ${doctor.doctorCode}`,
-    400,
-    startY + 40
-  );
+  doc.text(`Doctor Code : ${doctor.doctorCode}`, 388, lineY + 36);
 
-  doc.y = y + 170;
+  doc.y = y + 120;
 };

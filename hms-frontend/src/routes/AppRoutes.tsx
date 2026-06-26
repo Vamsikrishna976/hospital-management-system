@@ -33,6 +33,7 @@ import PendingLabOrders from "../pages/laboratory/PendingLabOrders";
 import UploadLabResult from "../pages/laboratory/UploadLabResult";
 import CompletedReports from "../pages/laboratory/CompletedReports";
 import AddLabTest from "../pages/laboratory/AddLabTest";
+import AppointmentCalendar from "../pages/appointments/AppointmentCalendar";
 
 export default function AppRoutes() {
   return (
@@ -196,6 +197,7 @@ export default function AppRoutes() {
         <Route path="/laboratory/reports" element={<CompletedReports />} />
 
         <Route path="/laboratory/tests/new" element={<AddLabTest />} />
+        <Route path="/appointment-calendar" element={<AppointmentCalendar />} />
       </Routes>
     </BrowserRouter>
   );

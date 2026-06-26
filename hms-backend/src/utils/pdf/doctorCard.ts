@@ -1,7 +1,7 @@
 import PDFDocument from "pdfkit";
 
 export const drawDoctorCard = (
-  doc: PDFDocument,
+  doc: any,
   doctor: any,
   reportStatus: string
 ) => {

@@ -33,6 +33,13 @@ export default function Sidebar() {
             </Link>
 
             <Link
+              to="/appointment-calendar"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Appointment Calendar
+            </Link>
+
+            <Link
               to="/audit-logs"
               className="block p-3 rounded hover:bg-slate-700"
             >
@@ -147,6 +154,13 @@ export default function Sidebar() {
             </Link>
 
             <Link
+              to="/appointment-calendar"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Appointment Calendar
+            </Link>
+
+            <Link
               to="/billing"
               className="block p-3 rounded hover:bg-slate-700"
             >
@@ -255,10 +269,10 @@ export default function Sidebar() {
             </Link>
 
             <Link
-              to="/appointments"
+              to="/appointment-calendar"
               className="block p-3 rounded hover:bg-slate-700"
             >
-              Appointments
+              Appointment Calendar
             </Link>
 
             <Link

@@ -25,6 +25,7 @@ import notificationRoutes from "./routes/notification.routes.ts";
 import pharmacyAnalyticsRoutes from "./routes/pharmacyAnalytics.routes.ts";
 import labRoutes from "./routes/lab.routes.ts";
 import labReportRoutes from "./routes/labReport.routes.ts";
+import appointmentCalendarRoutes from "./routes/appointmentCalendar.routes.ts";
 
 dotenv.config();
 
@@ -59,6 +60,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/pharmacy-analytics", pharmacyAnalyticsRoutes);
 app.use("/api/lab", labRoutes);
 app.use("/api/lab-report", labReportRoutes);
+app.use("/api/appointment-calendar", appointmentCalendarRoutes);
 
 const PORT = process.env.PORT || 5000;
 
