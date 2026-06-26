@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 import axios from "axios";
 
 export default function AuditLogs() {

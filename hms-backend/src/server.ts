@@ -18,6 +18,14 @@ import dashboardRoutes from "./routes/dashboard.routes.ts";
 import reportRoutes from "./routes/report.routes.ts";
 import userRoutes from "./routes/user.routes.ts";
 import auditRoutes from "./routes/audit.routes.ts";
+import inventoryRoutes from "./routes/inventory.routes.ts";
+import pharmacyRoutes from "./routes/pharmacy.routes.ts";
+import pharmacyBillingRoutes from "./routes/pharmacyBilling.routes.ts";
+import notificationRoutes from "./routes/notification.routes.ts";
+import pharmacyAnalyticsRoutes from "./routes/pharmacyAnalytics.routes.ts";
+import labRoutes from "./routes/lab.routes.ts";
+import labReportRoutes from "./routes/labReport.routes.ts";
+import appointmentCalendarRoutes from "./routes/appointmentCalendar.routes.ts";
 
 dotenv.config();
 
@@ -42,10 +50,17 @@ app.use("/api/billing", billingRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/audit", auditRoutes);
-
+app.use("/api/inventory", inventoryRoutes);
 app.get("/", (req, res) => {
   res.send("Hospital Management System API Running");
 });
+app.use("/api/pharmacy", pharmacyRoutes);
+app.use("/api/pharmacy-bills", pharmacyBillingRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/pharmacy-analytics", pharmacyAnalyticsRoutes);
+app.use("/api/lab", labRoutes);
+app.use("/api/lab-report", labReportRoutes);
+app.use("/api/appointment-calendar", appointmentCalendarRoutes);
 
 const PORT = process.env.PORT || 5000;
 

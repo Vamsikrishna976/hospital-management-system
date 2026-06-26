@@ -5,13 +5,10 @@ export default function Sidebar() {
   const role = localStorage.getItem("role");
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-
-    if (confirmLogout) {
+    if (window.confirm("Are you sure you want to logout?")) {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
       localStorage.removeItem("user");
-
       navigate("/");
     }
   };
@@ -36,6 +33,13 @@ export default function Sidebar() {
             </Link>
 
             <Link
+              to="/appointment-calendar"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Appointment Calendar
+            </Link>
+
+            <Link
               to="/audit-logs"
               className="block p-3 rounded hover:bg-slate-700"
             >
@@ -43,10 +47,80 @@ export default function Sidebar() {
             </Link>
 
             <Link
+              to="/pharmacy/audit-logs"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Audit Logs
+            </Link>
+
+            <Link
+              to="/inventory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Inventory
+            </Link>
+
+            <Link
+              to="/pharmacy/prescriptions"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Prescriptions
+            </Link>
+
+            <Link
+              to="/pharmacy-billing"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Billing
+            </Link>
+
+            <Link
               to="/reports"
               className="block p-3 rounded hover:bg-slate-700"
             >
               Reports
+            </Link>
+
+            <Link
+              to="/pharmacy-analytics"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Analytics
+            </Link>
+
+            <Link
+              to="/laboratory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Laboratory Dashboard
+            </Link>
+
+            <Link
+              to="/laboratory/tests"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Lab Tests
+            </Link>
+
+            <Link
+              to="/laboratory/new-order"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              New Lab Order
+            </Link>
+
+            <Link
+              to="/laboratory/pending"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pending Lab Orders
+            </Link>
+
+            <Link
+              to="/laboratory/reports"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Completed Lab Reports
             </Link>
           </>
         )}
@@ -80,6 +154,13 @@ export default function Sidebar() {
             </Link>
 
             <Link
+              to="/appointment-calendar"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Appointment Calendar
+            </Link>
+
+            <Link
               to="/billing"
               className="block p-3 rounded hover:bg-slate-700"
             >
@@ -91,6 +172,62 @@ export default function Sidebar() {
               className="block p-3 rounded hover:bg-slate-700"
             >
               Billing History
+            </Link>
+
+            <Link
+              to="/inventory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Inventory
+            </Link>
+
+            <Link
+              to="/pharmacy-billing"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Billing
+            </Link>
+
+            <Link
+              to="/pharmacy-analytics"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Analytics
+            </Link>
+
+            <Link
+              to="/laboratory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Laboratory Dashboard
+            </Link>
+
+            <Link
+              to="/laboratory/tests"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Lab Tests
+            </Link>
+
+            <Link
+              to="/laboratory/new-order"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              New Lab Order
+            </Link>
+
+            <Link
+              to="/laboratory/pending"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pending Lab Orders
+            </Link>
+
+            <Link
+              to="/laboratory/reports"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Completed Lab Reports
             </Link>
           </>
         )}
@@ -132,10 +269,38 @@ export default function Sidebar() {
             </Link>
 
             <Link
-              to="/appointments"
+              to="/appointment-calendar"
               className="block p-3 rounded hover:bg-slate-700"
             >
-              Appointments
+              Appointment Calendar
+            </Link>
+
+            <Link
+              to="/inventory"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Inventory
+            </Link>
+
+            <Link
+              to="/pharmacy/prescriptions"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Prescriptions
+            </Link>
+
+            <Link
+              to="/pharmacy-billing"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Billing
+            </Link>
+
+            <Link
+              to="/pharmacy/audit-logs"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Audit Logs
             </Link>
 
             <Link
@@ -144,13 +309,20 @@ export default function Sidebar() {
             >
               Reports
             </Link>
+
+            <Link
+              to="/pharmacy-analytics"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              Pharmacy Analytics
+            </Link>
           </>
         )}
       </nav>
 
       <button
         onClick={handleLogout}
-        className="w-40 bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold mt-4"
+        className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold mt-8"
       >
         Logout
       </button>

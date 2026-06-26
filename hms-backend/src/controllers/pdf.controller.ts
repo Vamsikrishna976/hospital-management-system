@@ -7,7 +7,7 @@ export const generatePrescriptionPDF = async (
   res: Response
 ) => {
   try {
-    const { id } = req.params;
+    const  id  = req.params.id as string;
 
     const prescription =
       await prisma.prescription.findUnique({

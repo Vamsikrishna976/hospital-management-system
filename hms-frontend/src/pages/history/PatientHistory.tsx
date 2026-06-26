@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 
 export default function PatientHistory() {
   const [mobile, setMobile] = useState("");

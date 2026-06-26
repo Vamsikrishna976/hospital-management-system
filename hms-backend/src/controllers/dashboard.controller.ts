@@ -120,6 +120,14 @@ export const getTodayStats = async (req: Request, res: Response) => {
       },
     });
 
+    const todayAppointments = await prisma.appointment.count({
+      where: {
+        assignedAt: {
+          gte: today,
+        },
+      },
+    });
+
     const todayRevenue = await prisma.billing.aggregate({
       where: {
         createdAt: {
@@ -137,6 +145,7 @@ export const getTodayStats = async (req: Request, res: Response) => {
     return res.json({
       todayPatients,
       todayOPRecords,
+      todayAppointments,
       todayBills,
       todayRevenue: todayRevenue._sum.totalAmount || 0,
     });

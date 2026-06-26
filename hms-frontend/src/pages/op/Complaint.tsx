@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 import { useState } from "react";
 import axios from "axios";
 

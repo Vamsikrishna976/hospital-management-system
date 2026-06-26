@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import DashboardLayout from "@/layouts/DashboardLayout";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import axios from "axios";
@@ -89,64 +90,66 @@ export default function Reports() {
   const revenueData = report.monthlyRevenue;
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-6">Reports & Analytics</h1>
+    <DashboardLayout>
+      <div className="max-w-7xl mx-auto p-6">
+        <h1 className="text-4xl font-bold mb-6">Reports & Analytics</h1>
 
-      <div className="grid md:grid-cols-5 gap-4">
-        <div className="bg-blue-600 text-white p-5 rounded-xl">
-          <p>Total Patients</p>
-          <h2 className="text-3xl font-bold">{report.totalPatients}</h2>
+        <div className="grid md:grid-cols-5 gap-4">
+          <div className="bg-blue-600 text-white p-5 rounded-xl">
+            <p>Total Patients</p>
+            <h2 className="text-3xl font-bold">{report.totalPatients}</h2>
+          </div>
+
+          <div className="bg-green-600 text-white p-5 rounded-xl">
+            <p>Total Doctors</p>
+            <h2 className="text-3xl font-bold">{report.totalDoctors}</h2>
+          </div>
+
+          <div className="bg-orange-500 text-white p-5 rounded-xl">
+            <p>Appointments</p>
+            <h2 className="text-3xl font-bold">{report.totalAppointments}</h2>
+          </div>
+
+          <div className="bg-purple-600 text-white p-5 rounded-xl">
+            <p>Total Bills</p>
+            <h2 className="text-3xl font-bold">{report.totalBills}</h2>
+          </div>
+
+          <div className="bg-red-600 text-white p-5 rounded-xl">
+            <p>Revenue</p>
+            <h2 className="text-3xl font-bold">₹{report.totalRevenue}</h2>
+          </div>
         </div>
 
-        <div className="bg-green-600 text-white p-5 rounded-xl">
-          <p>Total Doctors</p>
-          <h2 className="text-3xl font-bold">{report.totalDoctors}</h2>
+        <div className="bg-white mt-8 p-6 rounded-xl shadow">
+          <h2 className="text-2xl font-bold mb-4">Revenue Analytics</h2>
+
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={revenueData}>
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="revenue" fill="#2563eb" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
-        <div className="bg-orange-500 text-white p-5 rounded-xl">
-          <p>Appointments</p>
-          <h2 className="text-3xl font-bold">{report.totalAppointments}</h2>
-        </div>
+        <div className="mt-6 flex gap-4">
+          <button
+            onClick={exportToPDF}
+            className="bg-red-600 text-white px-6 py-3 rounded-lg"
+          >
+            📄 Download PDF
+          </button>
 
-        <div className="bg-purple-600 text-white p-5 rounded-xl">
-          <p>Total Bills</p>
-          <h2 className="text-3xl font-bold">{report.totalBills}</h2>
-        </div>
-
-        <div className="bg-red-600 text-white p-5 rounded-xl">
-          <p>Revenue</p>
-          <h2 className="text-3xl font-bold">₹{report.totalRevenue}</h2>
+          <button
+            onClick={exportToExcel}
+            className="bg-green-600 text-white px-6 py-3 rounded-lg"
+          >
+            📊 Export Excel
+          </button>
         </div>
       </div>
-
-      <div className="bg-white mt-8 p-6 rounded-xl shadow">
-        <h2 className="text-2xl font-bold mb-4">Revenue Analytics</h2>
-
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={revenueData}>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="revenue" fill="#2563eb" radius={[8, 8, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      <div className="mt-6 flex gap-4">
-        <button
-          onClick={exportToPDF}
-          className="bg-red-600 text-white px-6 py-3 rounded-lg"
-        >
-          📄 Download PDF
-        </button>
-
-        <button
-          onClick={exportToExcel}
-          className="bg-green-600 text-white px-6 py-3 rounded-lg"
-        >
-          📊 Export Excel
-        </button>
-      </div>
-    </div>
+    </DashboardLayout>
   );
 }

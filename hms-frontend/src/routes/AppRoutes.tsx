@@ -20,7 +20,20 @@ import ProtectedRoute from "./ProctectedRoute";
 import UserManagement from "../pages/admin/UserManagement";
 import AuditLogs from "../pages/admin/AuditLogs";
 import RoleProtectedRoute from "./RoleProtectedRoute";
-import DashboardLayout from "../components/layout/DashboardLayout";
+import InventoryManagement from "../pages/pharmacy/InventoryManagement";
+import PrescriptionDispense from "../pages/pharmacy/PrescriptionDispense";
+import AuditLogsPharmacy from "../pages/pharmacy/AuditLogsPharmacy";
+import PharmacyBilling from "../pages/pharmacy/PharmacyBilling";
+import PharmacyAnalytics from "../pages/pharmacy/PharmacyAnalytics";
+
+import LabDashboard from "../pages/laboratory/LabDashboard";
+import LabTests from "../pages/laboratory/LabTests";
+import NewLabOrder from "../pages/laboratory/NewLabOrder";
+import PendingLabOrders from "../pages/laboratory/PendingLabOrders";
+import UploadLabResult from "../pages/laboratory/UploadLabResult";
+import CompletedReports from "../pages/laboratory/CompletedReports";
+import AddLabTest from "../pages/laboratory/AddLabTest";
+import AppointmentCalendar from "../pages/appointments/AppointmentCalendar";
 
 export default function AppRoutes() {
   return (
@@ -155,6 +168,36 @@ export default function AppRoutes() {
             </RoleProtectedRoute>
           }
         />
+
+        <Route path="/inventory" element={<InventoryManagement />} />
+
+        <Route
+          path="/pharmacy/prescriptions"
+          element={<PrescriptionDispense />}
+        />
+        <Route path="/pharmacy/audit-logs" element={<AuditLogsPharmacy />} />
+
+        <Route path="/pharmacy-billing" element={<PharmacyBilling />} />
+
+        <Route path="/pharmacy-analytics" element={<PharmacyAnalytics />} />
+
+        <Route path="/laboratory" element={<LabDashboard />} />
+
+        <Route path="/laboratory/tests" element={<LabTests />} />
+
+        <Route path="/laboratory/new-order" element={<NewLabOrder />} />
+
+        <Route path="/laboratory/pending" element={<PendingLabOrders />} />
+
+        <Route
+          path="/laboratory/upload/:itemId"
+          element={<UploadLabResult />}
+        />
+
+        <Route path="/laboratory/reports" element={<CompletedReports />} />
+
+        <Route path="/laboratory/tests/new" element={<AddLabTest />} />
+        <Route path="/appointment-calendar" element={<AppointmentCalendar />} />
       </Routes>
     </BrowserRouter>
   );
