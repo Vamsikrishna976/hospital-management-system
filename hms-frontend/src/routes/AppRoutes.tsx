@@ -34,6 +34,9 @@ import UploadLabResult from "../pages/laboratory/UploadLabResult";
 import CompletedReports from "../pages/laboratory/CompletedReports";
 import AddLabTest from "../pages/laboratory/AddLabTest";
 import AppointmentCalendar from "../pages/appointments/AppointmentCalendar";
+import IPDManagement from "../pages/ipd/IPDManagement";
+import BedDashboard from "../pages/ipd/BedDashboard";
+import IPDBilling from "../pages/ipd/IPDBilling";
 
 export default function AppRoutes() {
   return (
@@ -197,7 +200,14 @@ export default function AppRoutes() {
         <Route path="/laboratory/reports" element={<CompletedReports />} />
 
         <Route path="/laboratory/tests/new" element={<AddLabTest />} />
+
         <Route path="/appointment-calendar" element={<AppointmentCalendar />} />
+
+        <Route path="/ipd" element={<IPDManagement />} />
+
+        <Route path="/beds" element={<BedDashboard />} />
+
+        <Route path="/ipd-billing" element={<IPDBilling />} />
       </Routes>
     </BrowserRouter>
   );

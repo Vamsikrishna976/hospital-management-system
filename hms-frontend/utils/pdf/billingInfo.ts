@@ -1,7 +1,7 @@
 import PDFDocument from "pdfkit";
 
 export const drawBillingInfo = (
-  doc: PDFDocument,
+  doc: any,
   bill: any,
   qrBuffer: Buffer
 ) => {

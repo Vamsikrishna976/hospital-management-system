@@ -176,7 +176,7 @@ export default function Billing() {
                   {/* Hospital Details */}
                   <div className="col-span-8 text-center">
                     <h1 className="text-5xl font-black tracking-wide">
-                      SRI KAVYA KRISHNA
+                      CITY CARE
                     </h1>
 
                     <h2 className="text-3xl font-bold text-blue-700">
@@ -294,7 +294,7 @@ export default function Billing() {
 
                 {/* Message */}
                 <div className="text-center text-gray-500">
-                  <p>Thank you for choosing Sri Kavya Krishna Hospital</p>
+                  <p>Thank you for choosing City Care Hospital</p>
 
                   <p>Get Well Soon ❤️</p>
                 </div>

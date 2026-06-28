@@ -262,9 +262,10 @@ model IPAdmission {
 
   patientId String
 
-  roomNumber String
-  ward       String
-  bedNumber  String
+  bedId String?
+  bed   Bed?    @relation(fields: [bedId], references: [id])
+
+  bill IPDBill?
 
   admittedDate  DateTime  @default(now())
   dischargeDate DateTime?
@@ -275,4 +276,43 @@ model IPAdmission {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Bed {
+  id         String    @id @default(uuid())
+  bedNumber  String    @unique
+  ward       String
+  roomNumber String
+  status     BedStatus @default(AVAILABLE)
+
+  admission IPAdmission[]
+
+  createdAt DateTime @default(now())
+}
+
+enum BedStatus {
+  AVAILABLE
+  OCCUPIED
+  MAINTENANCE
+}
+
+model IPDBill {
+  id String @id @default(uuid())
+
+  billNumber String @unique
+
+  admissionId String      @unique
+  admission   IPAdmission @relation(fields: [admissionId], references: [id])
+
+  roomCharges     Float @default(0)
+  doctorCharges   Float @default(0)
+  labCharges      Float @default(0)
+  pharmacyCharges Float @default(0)
+  otherCharges    Float @default(0)
+
+  totalAmount Float
+
+  paymentStatus String @default("PENDING")
+
+  createdAt DateTime @default(now())
 }
