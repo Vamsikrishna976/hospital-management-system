@@ -36,7 +36,7 @@ export const drawHospitalHeader = (doc: any) => {
     .fillColor("#1E3A8A")
     .font("Helvetica-Bold")
     .fontSize(22)
-    .text("SRI KAVYA KRISHNA HOSPITAL", 145, 52);
+    .text("CITY CARE HOSPITAL", 145, 52);
 
   doc
     .fillColor("#2563EB")

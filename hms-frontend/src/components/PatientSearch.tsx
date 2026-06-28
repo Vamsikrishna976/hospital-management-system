@@ -1,4 +1,4 @@
-import DashboardLayout from "../components/layout/DashboardLayout";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 export default function PatientSearch() {
   return (

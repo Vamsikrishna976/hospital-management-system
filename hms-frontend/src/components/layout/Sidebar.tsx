@@ -122,6 +122,14 @@ export default function Sidebar() {
             >
               Completed Lab Reports
             </Link>
+
+            <Link to="/ipd" className="block p-3 rounded hover:bg-slate-700">
+              IPD Management
+            </Link>
+
+            <Link to="/beds" className="block p-3 rounded hover:bg-slate-700">
+              Beds Available
+            </Link>
           </>
         )}
 
@@ -229,6 +237,21 @@ export default function Sidebar() {
             >
               Completed Lab Reports
             </Link>
+
+            <Link to="/ipd" className="block p-3 rounded hover:bg-slate-700">
+              IPD Management
+            </Link>
+
+            <Link to="/beds" className="block p-3 rounded hover:bg-slate-700">
+              Beds Available
+            </Link>
+
+            <Link
+              to="/ipd-billing"
+              className="block p-3 rounded hover:bg-slate-700"
+            >
+              IPD Billing
+            </Link>
           </>
         )}
 
@@ -315,6 +338,9 @@ export default function Sidebar() {
               className="block p-3 rounded hover:bg-slate-700"
             >
               Pharmacy Analytics
+            </Link>
+            <Link to="/ipd" className="block p-3 rounded hover:bg-slate-700">
+              IPD Management
             </Link>
           </>
         )}
