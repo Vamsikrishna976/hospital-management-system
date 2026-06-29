@@ -37,6 +37,7 @@ import AppointmentCalendar from "../pages/appointments/AppointmentCalendar";
 import IPDManagement from "../pages/ipd/IPDManagement";
 import BedDashboard from "../pages/ipd/BedDashboard";
 import IPDBilling from "../pages/ipd/IPDBilling";
+import AIAssistant from "../pages/ai/AIAssistant";
 
 export default function AppRoutes() {
   return (
@@ -208,6 +209,8 @@ export default function AppRoutes() {
         <Route path="/beds" element={<BedDashboard />} />
 
         <Route path="/ipd-billing" element={<IPDBilling />} />
+
+        <Route path="/ai-assistant" element={<AIAssistant />} />
       </Routes>
     </BrowserRouter>
   );
