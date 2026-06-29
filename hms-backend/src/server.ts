@@ -29,6 +29,7 @@ import appointmentCalendarRoutes from "./routes/appointmentCalendar.routes.ts";
 import ipdRoutes from "./routes/ipd.routes.ts"
 import bedRoutes from "./routes/bed.routes.ts";
 import ipdBillingRoutes from "./routes/ipdBilling.routes.ts";
+import aiRoutes from "./routes/ai.routes.ts";
 
 dotenv.config();
 
@@ -67,7 +68,7 @@ app.use("/api/appointment-calendar", appointmentCalendarRoutes);
 app.use("/api/ipd", ipdRoutes);
 app.use("/api/beds", bedRoutes);
 app.use("/api/ipd-billing", ipdBillingRoutes);
-
+app.use("/api/ai", aiRoutes);
 
 const PORT = process.env.PORT || 5000;
 

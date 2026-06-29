@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { Bot } from "lucide-react";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -130,6 +131,14 @@ export default function Sidebar() {
             <Link to="/beds" className="block p-3 rounded hover:bg-slate-700">
               Beds Available
             </Link>
+
+            <Link
+              to="/ai-assistant"
+              className="flex items-center gap-2 p-3 rounded hover:bg-slate-700"
+            >
+              <Bot size={18} />
+              AI Assistant
+            </Link>
           </>
         )}
 
@@ -252,6 +261,14 @@ export default function Sidebar() {
             >
               IPD Billing
             </Link>
+
+            <Link
+              to="/ai-assistant"
+              className="flex items-center gap-2 p-3 rounded hover:bg-slate-700"
+            >
+              <Bot size={18} />
+              AI Assistant
+            </Link>
           </>
         )}
 
@@ -270,6 +287,14 @@ export default function Sidebar() {
               className="block p-3 rounded hover:bg-slate-700"
             >
               Patient History
+            </Link>
+
+            <Link
+              to="/ai-assistant"
+              className="flex items-center gap-2 p-3 rounded hover:bg-slate-700"
+            >
+              <Bot size={18} />
+              AI Assistant
             </Link>
           </>
         )}
