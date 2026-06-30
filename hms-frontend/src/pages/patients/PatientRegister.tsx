@@ -19,6 +19,7 @@ export default function PatientRegister() {
   };
 
   return (
+    <DashboardLayout>
       <form onSubmit={handleSubmit} className="space-y-4 mt-6">
         <input
           placeholder="Full Name"
@@ -85,6 +86,7 @@ export default function PatientRegister() {
         >
           Register Patient
         </button>
-      </form>   
+      </form>
+    </DashboardLayout>
   );
 }

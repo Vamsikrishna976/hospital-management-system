@@ -26,7 +26,7 @@ import pharmacyAnalyticsRoutes from "./routes/pharmacyAnalytics.routes.ts";
 import labRoutes from "./routes/lab.routes.ts";
 import labReportRoutes from "./routes/labReport.routes.ts";
 import appointmentCalendarRoutes from "./routes/appointmentCalendar.routes.ts";
-import ipdRoutes from "./routes/ipd.routes.ts"
+import ipdRoutes from "./routes/ipd.routes.ts";
 import bedRoutes from "./routes/bed.routes.ts";
 import ipdBillingRoutes from "./routes/ipdBilling.routes.ts";
 import aiRoutes from "./routes/ai.routes.ts";

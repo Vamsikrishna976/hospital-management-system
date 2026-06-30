@@ -19,7 +19,9 @@ export const chatWithAI = async (req: Request, res: Response) => {
       const latestOP = patientContext?.opRecords?.[0];
       const prescription = latestOP?.appointment?.[0]?.prescription;
       const latestLabOrder = patientContext?.labOrders?.[0];
-      const previousVisits = patientContext.opRecords?.slice(1) || [];
+      const previousVisits = patientContext?.opRecords?.slice(1) || [];
+
+      
 
       if (patientContext) {
         finalPrompt = `
