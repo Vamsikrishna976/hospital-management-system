@@ -48,7 +48,17 @@ export default function BedDashboard() {
         status,
       });
 
-      loadBeds();
+      setBeds((prev) =>
+        prev.map((bed) =>
+          bed.id === id
+            ? {
+                ...bed,
+                status,
+              }
+            : bed,
+        ),
+      );
+
       loadStats();
     } catch (err) {
       console.error(err);
@@ -140,7 +150,6 @@ export default function BedDashboard() {
         />
 
         <BedStats stats={stats} />
-
 
         <div className="space-y-8">
           {Object.entries(groupedBeds).map(([ward, wardBeds]: any) => (
