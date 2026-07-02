@@ -15,6 +15,7 @@ const PatientContextCard = lazy(
 export default function AIAssistant() {
   const [prompt, setPrompt] = useState("");
   const [selectedPatient, setSelectedPatient] = useState("");
+  const [showPatientInfo, setShowPatientInfo] = useState(true);
   const { patients } = usePatients();
 
   const { context, loadingContext } = usePatientContext(selectedPatient);
@@ -40,18 +41,25 @@ export default function AIAssistant() {
         <PatientSelector
           patients={patients}
           selectedPatient={selectedPatient}
-          onSelect={setSelectedPatient}
+          onSelect={(id) => {
+            setSelectedPatient(id);
+            setShowPatientInfo(true);
+          }}
+          showPatientInfo={showPatientInfo}
+          onTogglePatientInfo={() => setShowPatientInfo(!showPatientInfo)}
         />
         {/* Patient Context Card */}
-        <Suspense
-          fallback={
-            <div className="bg-white rounded-xl shadow-md p-6">
-              Loading Patient Context...
-            </div>
-          }
-        >
-          <PatientContextCard context={context} loading={loadingContext} />
-        </Suspense>
+        {showPatientInfo && (
+          <Suspense
+            fallback={
+              <div className="bg-white rounded-xl shadow-md p-6">
+                Loading Patient Context...
+              </div>
+            }
+          >
+            <PatientContextCard context={context} loading={loadingContext} />
+          </Suspense>
+        )}
 
         {/* Quick Prompts */}
         <QuickPrompts onSelect={handleQuickPrompt} />
